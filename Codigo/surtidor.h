@@ -4,10 +4,9 @@
 #include <iomanip>
 #include <ctime>
 #include <sstream>
-#include "tanque.h"
+#include "estacion.h"
 
 using namespace std;
-
 
 #ifndef surtidor_h
 #define surtidor_h
@@ -21,15 +20,15 @@ class surtidor {
         string codigo;
         string modelo;
         bool estado;
-        tanque tanqueAsociado;
 
     public:
 
-        surtidor(string code, string mod, tanque tan, bool status);
+        surtidor(string cod, string mod, tanque tan, bool status);
 
         string calcularPrecio(string cantidad);
 
         string vender();
+
 
 };
 

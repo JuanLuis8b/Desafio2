@@ -1,4 +1,5 @@
 #include "surtidor.h"
+#include "estacion.h"
 
 string getFecha(){
     //auto permite al compilador deducir el tipo de dato
@@ -29,12 +30,28 @@ surtidor(string code, string mod, tanque tan, bool status){
     estado = status;
 }
 
-string calcularPrecio(string cantidad){
-        //int precio = tanqueAsociado.getPrecioPerGalon();
-        //string total = to_string(stoi(cantidad)*precio)
-        //return total;
+string calcularPrecio(string tipo, float cantidad, estacion& A){
+
+    if (tipo == "Regular"){
+        return (A.getPrecioRegular()*cantidad);
+    }else if (tipo == "Premium"){
+        return (A.getPrecioPremium()*cantidad);
+    }else if (tipo == "Eco"){
+        return (A.getPrecioEco()*cantidad);
+    }
 }
 
+string combustible(string num){
+    if (num == "1"){
+        return "Regular";
+    }
+    else if (num == "2"){
+        return "Premium";
+    }
+    else if (num == "3"){
+        return "Eco";
+    }
+}
 string vender(){
 
     string fecha = getFecha();
@@ -44,14 +61,14 @@ string vender(){
     cout<<"(1) Regular, (2) Premium, (3) EcoExtra -> ";
     string tipo;
     cin << tipo;
+    tipo = combustible(tipo);
     cout << "Galones vendidos: ";
     string cantidad;
     cin << cantidad;
     cout <<"(1) Efectivo, (2) Tarjeta Debito, (3) Tarjeta Credito ->: ";
     string metodoPago;
-    cin << metodoPago;
-    string precio = precioTotal(cantidad);
-    string registro = codigo + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + precio + " " + metodoPago;
+    string montoPago = calcularPrecio(tipo,cantidad,A);
+    //string registro = codigo + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + precio + " " + metodoPago;
 
     //cantidad = tanqueAsociado.getCantidad;
     //tanqueAsociado.setCantidad(cantidad - cantidadvendida)
@@ -60,3 +77,9 @@ string vender(){
     //return registro;
     //registrarVenta(registro,);
     }
+
+/*void setEstacion(estacion& tEstacion){
+    A = tEstacion;
+}*/
+
+
