@@ -2,6 +2,7 @@
 #include <string>
 
 #include "surtidor.h"
+#include "tanque.h"
 
 using namespace std;
 
@@ -13,20 +14,49 @@ class estacion {
 
     private:
 
+        string nombre;
         string codigo;
         string region;
         string coordenadas;
         string gerente;
 
-        int regular[2];
-        int premium[2];
-        int eco[2];
+        tanque tanqueCentral;
 
-        surtidor surtidores = new surtidor[3];
+        int precioR;
+        int precioP;
+        int precioE;
+
+        int cantSurtidores = 2;
+
+        surtidor* surtidores;// = new surtidor[cantSurtidores];
 
     public:
 
-        estacion(string cod, string reg, string ger, string coo);
+        estacion(string nombre, string codigo, string region, string coordenadas, string gerente);
+
+        string getNombre();
+        string getCodigo();
+        string getRegion();
+        string getCoordenadas();
+        string getGerente();
+
+        void setNombre();
+        void setCodigo();
+        void setRegion();
+        void setCoordenadas();
+        void setGerente();
+
+        void agregarSurtidor(surtidor A);
+        void eliminarSurtidor(surtidor A);
+        void activarSurtidor(string codigo);
+        void desactivarSurtidor(string codigo);
+
+};
+
+#endif // ESTACION_H
+
+/*
+estacion(string cod, string reg, string ger, string coo);
 
         string getRegion();
         int getCapRegular();
@@ -35,6 +65,4 @@ class estacion {
         int getPrecioRegular();
         int getPrecioPremium();
         int getPrecioEco();
-};
-
-#endif // ESTACION_H
+*/

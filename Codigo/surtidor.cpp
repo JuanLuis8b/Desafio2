@@ -1,6 +1,6 @@
 #include "surtidor.h"
 #include "estacion.h"
-
+/*
 string getFecha(){
     //auto permite al compilador deducir el tipo de dato
     time_t t = time(nullptr);//devuelve la hora como segundos (tipo time_t)
@@ -11,24 +11,14 @@ string getFecha(){
     return str;
 }
 
-void registrarVenta(string info, string archivo){
-    ofstream file(Archivo, ios::out | ios::app);
-
-    if (!open.file()){
-        cerr<<"Error abriendo archivo.";
-        return;
-    }
-
-    file << info << endl;
-    file.close();
-}
-
-surtidor(string code, string mod, tanque tan, bool status){
+surtidor(string code, string mod, bool status){
     codigo = code;
     modelo = mod;
-    tanqueAsociado = tan;
+    //tanqueAsociado = tan;
     estado = status;
 }
+
+
 
 string calcularPrecio(string tipo, float cantidad, estacion& A){
 
@@ -52,6 +42,7 @@ string combustible(string num){
         return "Eco";
     }
 }
+
 string vender(){
 
     string fecha = getFecha();
@@ -65,21 +56,59 @@ string vender(){
     cout << "Galones vendidos: ";
     string cantidad;
     cin << cantidad;
+    string montoPago = calcularPrecio(tipo,cantidad,A);
     cout <<"(1) Efectivo, (2) Tarjeta Debito, (3) Tarjeta Credito ->: ";
     string metodoPago;
-    string montoPago = calcularPrecio(tipo,cantidad,A);
-    //string registro = codigo + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + precio + " " + metodoPago;
 
-    //cantidad = tanqueAsociado.getCantidad;
-    //tanqueAsociado.setCantidad(cantidad - cantidadvendida)
-    //---- O
-    //tanqueAsociado.actualizar(cantidad);
-    //return registro;
-    //registrarVenta(registro,);
+
+    string registro = codigo + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + montoPago + " " + metodoPago;
+    return registro;
+
+}
+
+void registrarVenta(string info, string archivo){
+    ofstream file(Archivo, ios::out | ios::app);
+
+    if (!open.file()){
+        cerr<<"Error abriendo archivo.";
+        return;
     }
 
-/*void setEstacion(estacion& tEstacion){
-    A = tEstacion;
-}*/
+    file << info << endl;
+    file.close();
+}
+*/
+
+surtidor(string n_codigo, string n_modelo, tanque& n_tanqueCentral, int& n_precioR, int& n_precioP, int& n_precioE){
+    codigo = n_codigo;
+    modelo = n_modelo;
+    tanqueCentral = n_tanqueCentral;
+    precioR = n_precioR;
+    precioP = n_precioP;
+    precioE = n_precioE;
+}
+
+string getCodigo(){
+    return codigo;
+}
+bool getEstado(){
+    return estado;
+}
+int getPrecioR(){
+    return precioR;
+}
+int getPrecioP(){
+    return precioP;
+}
+int getPrecioE(){
+    return precioE;
+}
+
+void setModelo(string nuevoModelo){
+    modelo = nuevoModelo;
+}
+void setEstado(bool nuevoEstado){
+    estado = nuevoEstado;
+}
 
 
