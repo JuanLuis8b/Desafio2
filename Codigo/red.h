@@ -7,28 +7,14 @@
 
 class red {
     private:
-        int capacidad = 6;
-        estacion grupo = new estacion [6];
+        int capacidad=1;
+        estacion* estaciones;
+
     public:
         red();
-        void agregarEstacion (estacion A){
-            //agregar estacion;
-        }
-        void eliminarEstacion(estacion A){
-            //eliminar estacion;
-        }
+        void agregarEstacion (estacion A);
 
-        void fijarPrecios(int NR, int NP, int NE, int CR, int CP, int CE, int SR, int SP, int SE){
-
-            for (int i = 0; i < capacidad; i++){
-                if (grupo[i].getRegion == "Norte"){
-                    grupo[i].getRegular[1] = NR;
-                    grupo[i].getPremium[1] = NP;
-                }
-            }
-        }
-
-
+        void eliminarEstacion(string codigo);
 };
 
 #endif // RED_H

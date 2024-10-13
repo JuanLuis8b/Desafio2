@@ -39,6 +39,8 @@ class estacion {
         string getRegion();
         string getCoordenadas();
         string getGerente();
+        int getCantSurtidores();
+
 
         void setNombre();
         void setCodigo();
@@ -46,6 +48,7 @@ class estacion {
         void setCoordenadas();
         void setGerente();
 
+        surtidor crearSurtidor();
         void agregarSurtidor(surtidor A);
         void eliminarSurtidor(surtidor A);
         void activarSurtidor(string codigo);

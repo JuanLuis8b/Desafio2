@@ -27,6 +27,7 @@ public:
     void setCantR(int nuevaCantR);
     void setCantP(int nuevaCantP);
     void setCantE(int nuevaCantE);
+
 };
 
 #endif // TANQUE_H

@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <ctime>
 #include <sstream>
-#include "estacion.h"
+
 #include "tanque.h"
 
 using namespace std;
@@ -32,7 +32,7 @@ class surtidor {
     public:
 
         surtidor();
-        surtidor(string codigo, string modelo, tanque& tanqueCentral, int& precioR, int& precioP, int& precioE);
+        surtidor(string codigo, string modelo, tanque& tanqueCentral, int precioR, int precioP, int precioE);
 
         string getCodigo();
         bool getEstado();
@@ -42,27 +42,6 @@ class surtidor {
 
         void setModelo(string nuevoModelo);
         void setEstado(bool nuevoEstado);
-
-
-
-        /*void setCodigo();
-         * void setModelo();
-         * string getCodigo();
-         * string getModelo();
-         */
 };
 
 #endif // SURTIDOR_H
-
-/*
-surtidor(string cod, string mod, bool status);
-
-        string getCodigo();
-        void setCodigo();
-        string getModelo();
-        void setModelo();
-
-        string calcularPrecio(string tipo,string cantidad);
-
-        string vender();
-*/

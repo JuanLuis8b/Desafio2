@@ -4,11 +4,13 @@
 using namespace std;
 
 #include "estacion.h"
+#include "tanque.h"
+#include "surtidor.h"
 
 
 string genCodigo(string codigo){
     int codInt = stoi(codigo);
-    codIn++;
+    codInt++;
     ostringstream oss;
     oss << setw(codigo.size())<<setfill('0')<<codInt;
     return oss.str();
@@ -29,30 +31,51 @@ estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas
 
     string SCodigo = genCodigo(codigo);
     for (int i = 0; i<cantSurtidores;i++){
-        surtidores[i] = surtidor(SCodigo,"Modelo-X",tanqueCentral,precioR,precioP,precioE);
+        surtidores[i] = surtidor(SCodigo,"Modelo-1",tanqueCentral,precioR,precioP,precioE);
         SCodigo = genCodigo(SCodigo);
     }
 }
 
-void agregarSurtidor(surtidor A, int& cap){
 
-    int nuevacap = cap+1;
+surtidor crearSurtidor(){
+
+    string codigo = surtidores[cantSurtidores-1].getCodigo();
+    codigo = genCodigo(codigo);
+    cout<<"Ingrese el modelo: ";
+    string modelo;
+    cin >> modelo;
+    surtidor A(codigo,modelo,tanqueCentral, precioR, precioP, precioE);
+    return A;
+}
+
+void agregarSurtidor(surtidor& A){
+    if (cantSurtidores == 12){
+        cerr<<"Ya se ha alcanzado el maximo de surtidores\n";
+        return;
+    }
+
+    nuevacap = cantSurtidores+1;
+
     surtidor* newSurtidores = new surtidor [nuevacap];
-    for (int i = 0; i<cap;i++){
+    for (int i = 0; i<cantSurtidores;i++){
         newSurtidores[i] = surtidores[i];
     }
     newSurtidores[nuevacap-1] = A;
 
     delete[] surtidores;
     surtidores = newSurtidores;
-    cap = nuevacap;
+    cantSurtidores = nuevacap;
 }
 
-void eliminarSurtidor(string codigo, int&cap){
-    int nuevacap = cap-1;
+void eliminarSurtidor(string codigo){
+    if (cantSurtidores = 0){
+        cerr<<"No hay surtidores para eliminar\n";
+        return;
+    }
+    int nuevacap = cantSurtidores-1;
     surtidor* newSurtidores = new surtidor [nuevacap];
     int index = 0;
-    for (int i = 0; i < cap; i++){
+    for (int i = 0; i < cantSurtidores; i++){
         if (surtidores[i].getCodigo() != codigo ){
             newSurtidores[index] = surtidores[i];
             index++;
@@ -60,9 +83,9 @@ void eliminarSurtidor(string codigo, int&cap){
     }
     delete[] surtidores;
     surtidores = newSurtidores;
-    cap = nuevacap;
-
+    cantSurtidores = nuevacap;
 }
+
 void activarSurtidor(string codigo){
     for (int i=0; i < cantSurtidores;i++){
         if (surtidores[i].getCodigo() == codigo){
@@ -78,6 +101,12 @@ void desactivarSurtidor(string codigo){
         }
     }
 }
+
+/*
+int getCantSurtidores(){
+    return cantSurtidores;
+}
+*/
 
 /*
 string getRegion(){

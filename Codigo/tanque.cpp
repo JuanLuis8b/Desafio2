@@ -1,3 +1,4 @@
+#include <iostream>
 #include "tanque.h"
 #include <random>
 using namespace std;
@@ -17,15 +18,31 @@ tanque::tanque() {
     cantE = capE;
 }
 
-int getCapR() const { return capR; }
-int getCapP() const { return capP; }
-int getCapE() const { return capE; }
+int tanque::getCapR() {
+    return capR;
+}
 
-int getCantR() const { return cantR; }
-int getCantP() const { return cantP; }
-int getCantE() const { return cantE; }
+int tanque::getCapP() {
+    return capP;
+}
 
-void setCantR(int nuevaCantR) {
+int tanque::getCapE()  {
+    return capE;
+}
+
+int tanque::getCantR()  {
+    return cantR;
+}
+
+int tanque::getCantP() {
+    return cantP;
+}
+
+int tanque::getCantE()  {
+    return cantE;
+}
+
+void tanque::setCantR(int nuevaCantR) {
     if (nuevaCantR <= capR) {
         cantR = nuevaCantR;
     } else {
@@ -33,7 +50,7 @@ void setCantR(int nuevaCantR) {
     }
 }
 
-void setCantP(int nuevaCantP) {
+void tanque::setCantP(int nuevaCantP) {
     if (nuevaCantP <= capP) {
         cantP = nuevaCantP;
     } else {
@@ -41,7 +58,7 @@ void setCantP(int nuevaCantP) {
     }
 }
 
-void setCantE(int nuevaCantE) {
+void tanque::setCantE(int nuevaCantE) {
     if (nuevaCantE <= capE) {
         cantE = nuevaCantE;
     } else {

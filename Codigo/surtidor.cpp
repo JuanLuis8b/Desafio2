@@ -1,6 +1,7 @@
+#include <fstream>
 #include "surtidor.h"
-#include "estacion.h"
-/*
+#include "tanque.h"
+
 string getFecha(){
     //auto permite al compilador deducir el tipo de dato
     time_t t = time(nullptr);//devuelve la hora como segundos (tipo time_t)
@@ -11,26 +12,6 @@ string getFecha(){
     return str;
 }
 
-surtidor(string code, string mod, bool status){
-    codigo = code;
-    modelo = mod;
-    //tanqueAsociado = tan;
-    estado = status;
-}
-
-
-
-string calcularPrecio(string tipo, float cantidad, estacion& A){
-
-    if (tipo == "Regular"){
-        return (A.getPrecioRegular()*cantidad);
-    }else if (tipo == "Premium"){
-        return (A.getPrecioPremium()*cantidad);
-    }else if (tipo == "Eco"){
-        return (A.getPrecioEco()*cantidad);
-    }
-}
-
 string combustible(string num){
     if (num == "1"){
         return "Regular";
@@ -38,38 +19,64 @@ string combustible(string num){
     else if (num == "2"){
         return "Premium";
     }
-    else if (num == "3"){
+    else {
         return "Eco";
     }
 }
 
-string vender(){
+string t_metodoPago(string metodo){
+    if (metodo == "1"){
+        return "Efectivo";
+    }else if (metodo == "2"){
+        return "Debito";
+    }else {
+        return "Credito";
+    }
+}
+
+string calcularPrecio(string tipo, string cantidad, surtidor& Surtidor){
+    int cant = stoi(cantidad);
+    int pago;
+
+    if (tipo == "Regular"){
+        pago = Surtidor.getPrecioR() * cant;
+        return to_string(pago);
+    }else if (tipo == "Premium"){
+        pago = Surtidor.getPrecioP() * cant;
+        return to_string(pago);
+    }else {
+        pago = Surtidor.getPrecioE() * cant;
+        return to_string(pago);
+    }
+}
+
+string vender(surtidor& Surtidor){
 
     string fecha = getFecha();
     cout<<"Numero de cedula: ";
     string cedula;
-    cin << cedula;
-    cout<<"(1) Regular, (2) Premium, (3) EcoExtra -> ";
+    cin >> cedula;
+    cout<<"\n(1) Regular\n(2) Premium\n(3) EcoExtra\n->";
     string tipo;
-    cin << tipo;
+    cin >> tipo;
     tipo = combustible(tipo);
-    cout << "Galones vendidos: ";
+    cout << "\nGalones vendidos: ";
     string cantidad;
-    cin << cantidad;
-    string montoPago = calcularPrecio(tipo,cantidad,A);
-    cout <<"(1) Efectivo, (2) Tarjeta Debito, (3) Tarjeta Credito ->: ";
+    cin >> cantidad;
+    string montoPago = calcularPrecio(tipo,cantidad,Surtidor);
+    cout <<"\n(1) Efectivo\n(2) Tarjeta Debito\n(3) Tarjeta Credito\n->";
     string metodoPago;
+    cin >> metodoPago;
+    metodoPago = t_metodoPago(metodoPago);
 
-
-    string registro = codigo + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + montoPago + " " + metodoPago;
+    string registro = Surtidor.getCodigo() + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + montoPago + " " + metodoPago;
     return registro;
-
 }
 
-void registrarVenta(string info, string archivo){
-    ofstream file(Archivo, ios::out | ios::app);
+void registrarVenta(string info, string nomArchivo){
+    ofstream file(nomArchivo, ios::out | ios::app);
 
-    if (!open.file()){
+    if (!file.is_open()){
         cerr<<"Error abriendo archivo.";
         return;
     }
@@ -77,37 +84,37 @@ void registrarVenta(string info, string archivo){
     file << info << endl;
     file.close();
 }
-*/
 
-surtidor(string n_codigo, string n_modelo, tanque& n_tanqueCentral, int& n_precioR, int& n_precioP, int& n_precioE){
+surtidor::surtidor(string n_codigo, string n_modelo, tanque& n_tanqueCentral, int n_precioR, int n_precioP, int n_precioE){
     codigo = n_codigo;
     modelo = n_modelo;
+    estado = false;
     tanqueCentral = n_tanqueCentral;
     precioR = n_precioR;
     precioP = n_precioP;
     precioE = n_precioE;
 }
 
-string getCodigo(){
+string surtidor::getCodigo(){
     return codigo;
 }
-bool getEstado(){
+bool surtidor::getEstado(){
     return estado;
 }
-int getPrecioR(){
+int surtidor::getPrecioR(){
     return precioR;
 }
-int getPrecioP(){
+int surtidor::getPrecioP(){
     return precioP;
 }
-int getPrecioE(){
+int surtidor::getPrecioE(){
     return precioE;
 }
 
-void setModelo(string nuevoModelo){
+void surtidor::setModelo(string nuevoModelo){
     modelo = nuevoModelo;
 }
-void setEstado(bool nuevoEstado){
+void surtidor::setEstado(bool nuevoEstado){
     estado = nuevoEstado;
 }
 
