@@ -16,7 +16,27 @@ string genCodigo(string codigo){
     return oss.str();
 }
 
-estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int n_precioR, int n_precioP, int n_precioE){
+
+estacion::estacion(){
+    nombre = "";
+    codigo = "";
+    region = "";
+    coordenadas = "";
+    gerente = "";
+
+    precioR = nullptr;
+    precioP = nullptr;
+    precioE = nullptr;
+
+    surtidores = new surtidor[cantSurtidores];
+
+    string SCodigo = genCodigo(codigo);
+    for (int i = 0; i<cantSurtidores;i++){
+        surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
+        SCodigo = genCodigo(SCodigo);
+    }
+}
+estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE){
     nombre = n_nombre;
     codigo = n_codigo;
     region = n_region;
@@ -31,30 +51,31 @@ estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas
 
     string SCodigo = genCodigo(codigo);
     for (int i = 0; i<cantSurtidores;i++){
-        surtidores[i] = surtidor(SCodigo,"Modelo-1",tanqueCentral,precioR,precioP,precioE);
+        surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
         SCodigo = genCodigo(SCodigo);
     }
 }
 
 
-surtidor crearSurtidor(){
+surtidor estacion::crearSurtidor(){
 
     string codigo = surtidores[cantSurtidores-1].getCodigo();
     codigo = genCodigo(codigo);
     cout<<"Ingrese el modelo: ";
     string modelo;
     cin >> modelo;
-    surtidor A(codigo,modelo,tanqueCentral, precioR, precioP, precioE);
+    surtidor A(codigo,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
     return A;
 }
 
-void agregarSurtidor(surtidor& A){
+void estacion::agregarSurtidor(surtidor& A){
+
     if (cantSurtidores == 12){
         cerr<<"Ya se ha alcanzado el maximo de surtidores\n";
         return;
     }
 
-    nuevacap = cantSurtidores+1;
+    int nuevacap = cantSurtidores+1;
 
     surtidor* newSurtidores = new surtidor [nuevacap];
     for (int i = 0; i<cantSurtidores;i++){
@@ -67,7 +88,7 @@ void agregarSurtidor(surtidor& A){
     cantSurtidores = nuevacap;
 }
 
-void eliminarSurtidor(string codigo){
+void estacion::eliminarSurtidor(string codigo){
     if (cantSurtidores = 0){
         cerr<<"No hay surtidores para eliminar\n";
         return;
@@ -86,7 +107,7 @@ void eliminarSurtidor(string codigo){
     cantSurtidores = nuevacap;
 }
 
-void activarSurtidor(string codigo){
+void estacion::activarSurtidor(string codigo){
     for (int i=0; i < cantSurtidores;i++){
         if (surtidores[i].getCodigo() == codigo){
             surtidores[i].setEstado(true);
@@ -94,7 +115,7 @@ void activarSurtidor(string codigo){
     }
 }
 
-void desactivarSurtidor(string codigo){
+void estacion::desactivarSurtidor(string codigo){
     for (int i = 0; i< cantSurtidores;i++){
         if (surtidores[i].getCodigo() == codigo){
             surtidores[i].setEstado(false);
@@ -102,6 +123,21 @@ void desactivarSurtidor(string codigo){
     }
 }
 
+string estacion::getCodigo(){
+    return codigo;
+}
+
+string estacion::getNombre(){
+    return nombre;
+}
+
+string estacion::getRegion(){
+    return region;
+}
+
+string estacion::getCoordenadas(){
+    return coordenadas;
+}
 /*
 int getCantSurtidores(){
     return cantSurtidores;

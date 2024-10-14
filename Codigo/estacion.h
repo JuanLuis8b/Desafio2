@@ -22,9 +22,9 @@ class estacion {
 
         tanque tanqueCentral;
 
-        int precioR;
-        int precioP;
-        int precioE;
+        int* precioR;
+        int* precioP;
+        int* precioE;
 
         int cantSurtidores = 2;
 
@@ -32,7 +32,8 @@ class estacion {
 
     public:
 
-        estacion(string nombre, string codigo, string region, string coordenadas, string gerente);
+        estacion();
+        estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
 
         string getNombre();
         string getCodigo();
@@ -49,10 +50,11 @@ class estacion {
         void setGerente();
 
         surtidor crearSurtidor();
-        void agregarSurtidor(surtidor A);
-        void eliminarSurtidor(surtidor A);
+        void agregarSurtidor(surtidor& A);
+        void eliminarSurtidor(string codigo);
         void activarSurtidor(string codigo);
         void desactivarSurtidor(string codigo);
+
 
 };
 

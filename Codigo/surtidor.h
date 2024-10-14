@@ -23,16 +23,16 @@ class surtidor {
         string modelo;
         bool estado;
 
-        tanque& tanqueCentral;
+        tanque* tanqueCentral;
 
-        int& precioR;
-        int& precioP;
-        int& precioE;
+        int** precioR;
+        int** precioP;
+        int** precioE;
 
     public:
 
         surtidor();
-        surtidor(string codigo, string modelo, tanque& tanqueCentral, int precioR, int precioP, int precioE);
+        surtidor(string n_codigo, string n_modelo, tanque* n_tanqueCentral, int** n_precioR, int** n_precioP, int** n_precioE);
 
         string getCodigo();
         bool getEstado();
@@ -44,4 +44,5 @@ class surtidor {
         void setEstado(bool nuevoEstado);
 };
 
+void registrarVenta(string info, string nomArchivo);
 #endif // SURTIDOR_H

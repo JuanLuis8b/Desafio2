@@ -85,7 +85,18 @@ void registrarVenta(string info, string nomArchivo){
     file.close();
 }
 
-surtidor::surtidor(string n_codigo, string n_modelo, tanque& n_tanqueCentral, int n_precioR, int n_precioP, int n_precioE){
+surtidor::surtidor(){
+    codigo = "";
+    modelo = "";
+    estado = false;
+    tanqueCentral = nullptr;
+    precioR = nullptr;
+    precioP = nullptr;
+    precioE = nullptr;
+
+
+}
+surtidor::surtidor(string n_codigo, string n_modelo, tanque* n_tanqueCentral, int** n_precioR, int** n_precioP, int** n_precioE){
     codigo = n_codigo;
     modelo = n_modelo;
     estado = false;
@@ -102,13 +113,13 @@ bool surtidor::getEstado(){
     return estado;
 }
 int surtidor::getPrecioR(){
-    return precioR;
+    return **precioR;
 }
 int surtidor::getPrecioP(){
-    return precioP;
+    return **precioP;
 }
 int surtidor::getPrecioE(){
-    return precioE;
+    return **precioE;
 }
 
 void surtidor::setModelo(string nuevoModelo){
