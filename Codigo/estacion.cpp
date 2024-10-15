@@ -57,7 +57,7 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
         SCodigo = genCodigo(SCodigo);
     }
 }
-
+/*
 surtidor estacion::crearSurtidor(){
 
     string codigo = surtidores[cantSurtidores-1].getCodigo();
@@ -67,14 +67,21 @@ surtidor estacion::crearSurtidor(){
     cin >> modelo;
     surtidor A(codigo,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
     return A;
-}
+}*/
 
-void estacion::agregarSurtidor(surtidor& A){
+void estacion::agregarSurtidor(){
 
     if (cantSurtidores == 12){
         cerr<<"Ya se ha alcanzado el maximo de surtidores\n";
         return;
     }
+
+    string codigo = surtidores[cantSurtidores-1].getCodigo();
+    codigo = genCodigo(codigo);
+    cout<<"Ingrese el modelo: ";
+    string modelo;
+    cin >> modelo;
+    surtidor nuevoSurtidor(codigo,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
 
     int nuevacap = cantSurtidores+1;
 
@@ -82,7 +89,7 @@ void estacion::agregarSurtidor(surtidor& A){
     for (int i = 0; i<cantSurtidores;i++){
         newSurtidores[i] = surtidores[i];
     }
-    newSurtidores[nuevacap-1] = A;
+    newSurtidores[nuevacap-1] = nuevoSurtidor;
 
     delete[] surtidores;
     surtidores = newSurtidores;
@@ -108,14 +115,18 @@ void estacion::eliminarSurtidor(string codigo){
     cantSurtidores = nuevacap;
 }
 
-void estacion::activarSurtidor(string codigo){
+void estacion::activarDesactivarSurtidor(string codigo){
     for (int i=0; i < cantSurtidores;i++){
         if (surtidores[i].getCodigo() == codigo){
-            surtidores[i].setEstado(true);
+            if (surtidores[i].getEstado()){
+                surtidores[i].setEstado(false);
+            }else{
+                surtidores[i].setEstado(true);
+            }
         }
     }
 }
-
+/*
 void estacion::desactivarSurtidor(string codigo){
     for (int i = 0; i< cantSurtidores;i++){
         if (surtidores[i].getCodigo() == codigo){
@@ -123,7 +134,7 @@ void estacion::desactivarSurtidor(string codigo){
         }
     }
 }
-
+*/
 void estacion::consultarHistorico(string nomArchivo){
 
     string datos[cantSurtidores];
@@ -138,7 +149,7 @@ void estacion::consultarHistorico(string nomArchivo){
     string linea;
     while (getline(file,linea)){
 
-        string codigo = linea.substr(0,4);
+        string codigo = linea.substr(0,5);
         string info = linea.substr(8)+"\n";
 
         for (int i = 0; i<cantSurtidores; i++){
@@ -163,7 +174,7 @@ void estacion::reporteLitros(string nomArchivo){
         return;
     }
 
-    float litrosR, litrosP, litrosE;
+    float litrosR = 0, litrosP = 0, litrosE = 0;
 
     string linea;
     while (getline(file,linea)){
@@ -186,11 +197,11 @@ void estacion::reporteLitros(string nomArchivo){
         ss>>metodoPago;
 
         if (tipoCombustible=="Regular"){
-            //litrosR+= double(cantidad);
+            litrosR+= stod(cantidad);
         }else if (tipoCombustible=="Premium"){
-            //litrosP+= double(cantidad);
+            litrosP+= stod(cantidad);
         }else {
-            //litrosE+= double(cantidad);
+            litrosE+= stod(cantidad);
         }
     }
     cout<<"Litros vendidos:\n";
@@ -292,11 +303,15 @@ string estacion::getRegion(){
 string estacion::getCoordenadas(){
     return coordenadas;
 }
-/*
-int getCantSurtidores(){
+
+surtidor* estacion::getSurtidores(){
+    return surtidores;
+}
+
+int estacion::getCantSurtidores(){
     return cantSurtidores;
 }
-*/
+
 
 /*
 string getRegion(){

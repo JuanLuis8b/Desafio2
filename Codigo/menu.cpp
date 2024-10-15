@@ -111,11 +111,9 @@ void fijarPrecios(red& redNacional){
 }
 
 int elegirEstacion(red& nameRed){
-    cout<<"Digite: \n";
-    //cout<<nameRed.getCapacidad();no esta actualizando capacidad;
+    cout<<"\nDigite:\n";
     for (int i = 0; i < nameRed.getCapacidad();i++){
-        cout<<"("<<(i+1)<<")"<<nameRed.getEstaciones()[i].getNombre()<<endl;
-        cout<<"i: "<<i;
+        cout<<"("<<(i+1)<<") "<<nameRed.getEstaciones()[i].getNombre()<<endl;
     }
     cout<<"-> ";
     string input;
@@ -125,4 +123,36 @@ int elegirEstacion(red& nameRed){
         cin >> input;
     }
     return (stoi(input)-1);
+}
+
+string elegirSurtidor(estacion& nameEstacion){
+    cout<<"\nDigite:\n";
+    for (int i = 0; i < nameEstacion.getCantSurtidores();i++){
+        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo();
+    }
+    cout<<"-> ";
+    string input;
+    cin >> input;
+    while (!esNumero(input)){
+        cerr << "Valor invalido. Ingrese un numero: ";
+        cin >> input;
+    }
+    int index = (stoi(input)-1);
+    return nameEstacion.getSurtidores()[index].getCodigo();
+}
+
+string elegirSurtidor_(estacion& nameEstacion){
+    cout<<"\nDigite:\n";
+    for (int i = 0; i < nameEstacion.getCantSurtidores();i++){
+        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo()<<" Estado: "<<(nameEstacion.getSurtidores()[i].getEstado() ? "Activo" : "Desactivo") ;
+    }
+    cout<<"-> ";
+    string input;
+    cin >> input;
+    while (!esNumero(input)){
+        cerr << "Valor invalido. Ingrese un numero: ";
+        cin >> input;
+    }
+    int index = (stoi(input)-1);
+    return nameEstacion.getSurtidores()[index].getCodigo();
 }

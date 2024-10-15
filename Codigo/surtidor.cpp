@@ -53,7 +53,7 @@ string calcularPrecio(string tipo, string cantidad, surtidor& Surtidor){
 
 string randomCedula(){
     random_device x;
-    uniform_int_distribution<> distrib(10000000,1410065407);
+    uniform_int_distribution<> distrib(10000000,99999999);
     return to_string(distrib(x));
 }
 
@@ -87,13 +87,20 @@ void surtidor::vender(string nomArchivo){
     if (tipo == "Regular"){
         pago = **precioR * stoi(cantidad);
         montoPago = to_string(pago);
+        cout<<cantidad;
+        cout<<montoPago;
     }else if (tipo == "Premium"){
         pago = **precioP * stoi(cantidad);
         montoPago = to_string(pago);
+        cout<<cantidad;
+        cout<<montoPago;
     }else {
         pago = **precioE * stoi(cantidad);
         montoPago = to_string(pago);
+        cout<<cantidad;
+        cout<<montoPago;
     }
+
     string metodoPago = randomMetodoPago();
 
     string registro = codigo + " | " + fecha + " | " + cedula + " | " + tipo + " | " + cantidad + " | " + montoPago + " | " + metodoPago;

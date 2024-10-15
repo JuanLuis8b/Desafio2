@@ -49,8 +49,9 @@ red::red(){
     capacidad = 1;
     estaciones = new estacion[capacidad];
     //estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
+    new (&estaciones[0]) estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
 
-    estaciones[0] = estacion("Centro","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
+    //estaciones[0] = estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
 }
 
 /*red::red(){
@@ -204,7 +205,7 @@ void red::eliminarEstacion(string codigo){
 void red::reporteVentas(string nomArchivo){
 
 
-    int datos[capacidad][3];
+    int datos[capacidad][3] = {0,0,0};
 
     ifstream file (nomArchivo);
 
@@ -238,7 +239,7 @@ void red::reporteVentas(string nomArchivo){
         ss.ignore(3);
         ss>>metodoPago;
 
-        string codigoEstacion = codigo.substr(0,2)+"00";
+        string codigoEstacion = codigo.substr(0,3)+"00";
         int totalPagado = stoi(totalStr);
 
         for (int i = 0; i<capacidad;i++){

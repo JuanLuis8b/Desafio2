@@ -49,11 +49,13 @@ class estacion {
         void setCoordenadas();
         void setGerente();
 
-        surtidor crearSurtidor();
-        void agregarSurtidor(surtidor& A);
+        surtidor* getSurtidores();
+
+        //surtidor crearSurtidor();
+        void agregarSurtidor();
         void eliminarSurtidor(string codigo);
-        void activarSurtidor(string codigo);
-        void desactivarSurtidor(string codigo);
+        void activarDesactivarSurtidor(string codigo);
+        //void desactivarSurtidor(string codigo);
 
         void consultarHistorico(string nomArchivo);
         void reporteLitros(string nomArchivo);
