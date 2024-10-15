@@ -58,6 +58,7 @@ class estacion {
         void consultarHistorico(string nomArchivo);
         void reporteLitros(string nomArchivo);
         void verificarFugas(string nomArchivo);
+        void simularVenta(string nomArchivo);
 
 };
 

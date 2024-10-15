@@ -1,4 +1,5 @@
 #include <fstream>
+#include <random>
 #include "surtidor.h"
 #include "tanque.h"
 
@@ -7,7 +8,7 @@ string getFecha(){
     time_t t = time(nullptr);//devuelve la hora como segundos (tipo time_t)
     auto tm = *localtime(&t);//lo convierte al formato local
     ostringstream oss;//construir cadena
-    oss << put_time(&tm, "%d/%m/%Y %H:%M:%S");//formatear la fecha y hora
+    oss << put_time(&tm, "%d/%m/%Y | %H:%M:%S");//formatear la fecha y hora
     string str = oss.str();//obtener la cadena
     return str;
 }
@@ -50,7 +51,68 @@ string calcularPrecio(string tipo, string cantidad, surtidor& Surtidor){
     }
 }
 
-string vender(surtidor& Surtidor){
+string randomCedula(){
+    random_device x;
+    uniform_int_distribution<> distrib(10000000,1410065407);
+    return to_string(distrib(x));
+}
+
+string randomCombustible(){
+    random_device x;
+    uniform_int_distribution<> distrib(1,3);
+    string tipo = to_string(distrib(x));
+    return combustible(tipo);
+}
+
+string randomMetodoPago(){
+    random_device x;
+    uniform_int_distribution<> distrib(1,3);
+    string tipo = to_string(distrib(x));
+    return t_metodoPago(tipo);
+}
+
+string randomCantidad(){
+    random_device x;
+    uniform_int_distribution<> distrib(3,20);
+    return to_string(distrib(x));
+}
+
+void surtidor::vender(string nomArchivo){
+    string fecha = getFecha();
+    string cedula = randomCedula();
+    string tipo = randomCombustible();
+    string cantidad = randomCantidad();
+    string montoPago;
+    int pago;
+    if (tipo == "Regular"){
+        pago = **precioR * stoi(cantidad);
+        montoPago = to_string(pago);
+    }else if (tipo == "Premium"){
+        pago = **precioP * stoi(cantidad);
+        montoPago = to_string(pago);
+    }else {
+        pago = **precioE * stoi(cantidad);
+        montoPago = to_string(pago);
+    }
+    string metodoPago = randomMetodoPago();
+
+    string registro = codigo + " | " + fecha + " | " + cedula + " | " + tipo + " | " + cantidad + " | " + montoPago + " | " + metodoPago;
+
+    ofstream file(nomArchivo, ios::out | ios::app);
+
+    if (!file.is_open()){
+        cerr<<"Error abriendo archivo.";
+        return;
+    }
+
+    file << registro << endl;
+    file.close();
+
+    cout<<"Informacion de la transaccion:\n";
+    cout << registro << endl;
+}
+/*
+void surtidor::vender(){
 
     string fecha = getFecha();
     cout<<"Numero de cedula: ";
@@ -69,8 +131,8 @@ string vender(surtidor& Surtidor){
     cin >> metodoPago;
     metodoPago = t_metodoPago(metodoPago);
 
-    string registro = Surtidor.getCodigo() + " " + fecha + " " + cedula + " " + tipo + " " + cantidad + " " + montoPago + " " + metodoPago;
-    return registro;
+    string registro = Surtidor.getCodigo() + " | " + fecha + " | " + cedula + " | " + tipo + " | " + cantidad + " | " + montoPago + " | " + metodoPago;
+
 }
 
 void registrarVenta(string info, string nomArchivo){
@@ -83,7 +145,7 @@ void registrarVenta(string info, string nomArchivo){
 
     file << info << endl;
     file.close();
-}
+}*/
 
 surtidor::surtidor(){
     codigo = "";

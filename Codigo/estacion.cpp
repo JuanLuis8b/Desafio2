@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <random>
 using namespace std;
 
 #include "estacion.h"
@@ -19,7 +20,7 @@ string genCodigo(string codigo){
 
 estacion::estacion(){
     nombre = "";
-    codigo = "";
+    codigo = "00100";
     region = "";
     coordenadas = "";
     gerente = "";
@@ -196,6 +197,18 @@ void estacion::reporteLitros(string nomArchivo){
     cout<<"  Regular: "<<litrosR<<"\n";
     cout<<"  Premium: "<<litrosP<<"\n";
     cout<<"  EcoExtra: "<<litrosE<<"\n";
+}
+
+
+int randomIndex(int cap){
+    random_device x;
+    uniform_int_distribution<> distrib(0,cap-1);
+    return distrib(x);
+}
+
+void estacion::simularVenta(string nomArchivo){
+    int index = randomIndex(cantSurtidores);
+    surtidores[index].vender(nomArchivo);
 }
 
 void estacion::verificarFugas(string nomArchivo){

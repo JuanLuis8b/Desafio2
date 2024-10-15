@@ -48,7 +48,9 @@ red::red(){
     precioESur = 0;
     capacidad = 1;
     estaciones = new estacion[capacidad];
-    estaciones[0].setCodigo("00100");
+    //estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
+
+    estaciones[0] = estacion("Centro","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
 }
 
 /*red::red(){
@@ -140,6 +142,7 @@ void red::agregarEstacion(){
     string nombre;
     cin>>nombre;
     string codigo = genCodigo_(estaciones[capacidad-1].getCodigo());
+    cout<<codigo;
     cout<<"\nIngrese la region:\n";
     string region = elegirRegion();
     cout<<"\nIngrese las coordenadas: ";
@@ -151,11 +154,11 @@ void red::agregarEstacion(){
 
     estacion nuevaEstacion;
     if (region == "Norte"){
-        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRNorte,&precioPNorte,&precioENorte);
+        nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRNorte,&precioPNorte,&precioENorte);
     }else if (region == "Centro"){
-        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRCentro,&precioPCentro,&precioECentro);
+        nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRCentro,&precioPCentro,&precioECentro);
     }else {
-        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRSur,&precioPSur,&precioESur);
+        nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRSur,&precioPSur,&precioESur);
     }
 
     int nuevacap = capacidad + 1;

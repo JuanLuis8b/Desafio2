@@ -21,8 +21,8 @@ int main(){
             }
             case 2 : {
                 bool case2 = false;
+                red redNacional;
                 while (case2 == false){
-                    red redNacional;
                     cerr<<"\nRed Nacional.\n";
                     int input3;
                     cout<<"Digite: \n(1) Agregar estacion\n(2) Eliminar estacion\n(3) Fijar precios en la red\n(4) Reporte de ventas\n(5) Seleccionar una estacion\n(#) Salir\n-> ";
@@ -30,6 +30,8 @@ int main(){
                     switch (input3) {
                         case 1 : {
                             redNacional.agregarEstacion();
+                            cout<<"\nEstacion agregada.\n";
+                            cout<<redNacional.getCapacidad();
                             break;
                         }
                         case 2 : {
@@ -50,7 +52,7 @@ int main(){
                             int index = elegirEstacion(redNacional);
                             estacion miEstacion = redNacional.getEstaciones()[index];
                             cout<<"\nEstacion "<<miEstacion.getNombre()<<endl;
-                            cout<<"Digite: \n(1)Agregar surtidor\n(2) Eliminar surtidor\n(3) Activar/desactivar surtidor\n(4) Consultar historial de ventas\n(5) Reporte de litros vendidos\n(6) Simular venta\n(7) Verificar fugas\n(#) Salir\n-> ";
+                            cout<<"Digite: \n(1)Modificar estacion (2)Agregar surtidor\n(3) Eliminar surtidor\n(4) Activar/desactivar surtidor\n(5) Consultar historial de ventas\n(6) Reporte de litros vendidos\n(7) Simular venta\n(8) Verificar fugas\n(#) Salir\n-> ";
                             int input4;
                             cin>>input4;
                             switch (input4) {
@@ -64,20 +66,26 @@ int main(){
                                     break;
                                 }
                                 case 4 : {
-                                    miEstacion.consultarHistorico(registros);
+
                                     break;
                                 }
                                 case 5 : {
-                                    miEstacion.reporteLitros(registros);
+                                    miEstacion.consultarHistorico(registros);
                                     break;
                                 }
                                 case 6 : {
+                                    miEstacion.reporteLitros(registros);
                                     break;
                                 }
                                 case 7 : {
+                                    miEstacion.simularVenta(registros);
+                                    break;
+                                }
+                                case 8 : {
                                     miEstacion.verificarFugas(registros);
                                     break;
                                 }
+
                                 default : {
                                     break;
                                 }

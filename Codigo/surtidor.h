@@ -42,6 +42,8 @@ class surtidor {
 
         void setModelo(string nuevoModelo);
         void setEstado(bool nuevoEstado);
+
+        void vender(string nomArchivo);
 };
 
 void registrarVenta(string info, string nomArchivo);
