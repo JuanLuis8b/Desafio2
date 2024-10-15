@@ -44,7 +44,7 @@ class estacion {
 
 
         void setNombre();
-        void setCodigo();
+        void setCodigo(string codigo);
         void setRegion();
         void setCoordenadas();
         void setGerente();
@@ -55,6 +55,9 @@ class estacion {
         void activarSurtidor(string codigo);
         void desactivarSurtidor(string codigo);
 
+        void consultarHistorico(string nomArchivo);
+        void reporteLitros(string nomArchivo);
+        void verificarFugas(string nomArchivo);
 
 };
 

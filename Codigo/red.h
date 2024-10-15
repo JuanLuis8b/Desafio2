@@ -20,12 +20,15 @@ class red {
         int precioECentro;
         int precioESur;
 
-        int capacidad = 1;
+        int capacidad;
         estacion* estaciones;
 
     public:
 
         red();
+
+        int getCapacidad();
+        estacion* getEstaciones();
 
         void setPrecioRNorte(int precio);
         void setPrecioRCentro(int precio);
@@ -40,7 +43,7 @@ class red {
         void setPrecioESur(int precio);
 
 
-        void agregarEstacion (estacion& A);
+        void agregarEstacion ();
         void eliminarEstacion(string codigo);
 
         void reporteVentas(string nomArchivo);

@@ -35,6 +35,7 @@ estacion::estacion(){
         surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
         SCodigo = genCodigo(SCodigo);
     }
+
 }
 estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE){
     nombre = n_nombre;
@@ -55,7 +56,6 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
         SCodigo = genCodigo(SCodigo);
     }
 }
-
 
 surtidor estacion::crearSurtidor(){
 
@@ -121,6 +121,147 @@ void estacion::desactivarSurtidor(string codigo){
             surtidores[i].setEstado(false);
         }
     }
+}
+
+void estacion::consultarHistorico(string nomArchivo){
+
+    string datos[cantSurtidores];
+
+    ifstream file (nomArchivo);
+
+    if (!file.is_open()){
+        cerr<<"Error abriendo archivo.";
+        return;
+    }
+
+    string linea;
+    while (getline(file,linea)){
+
+        string codigo = linea.substr(0,4);
+        string info = linea.substr(8)+"\n";
+
+        for (int i = 0; i<cantSurtidores; i++){
+            if (surtidores[i].getCodigo()==codigo){
+                datos[i]+=info;
+            }
+        }
+    }
+
+    for (int i = 0; i<cantSurtidores;i++){
+        cout<<"Surtidor #"<<surtidores[i].getCodigo()<<endl;
+        cout<<datos[i]<<endl;
+    }
+}
+
+void estacion::reporteLitros(string nomArchivo){
+
+    fstream file (nomArchivo);
+
+    if (!file.is_open()){
+        cerr<<"Error abriendo archivo.";
+        return;
+    }
+
+    float litrosR, litrosP, litrosE;
+
+    string linea;
+    while (getline(file,linea)){
+        stringstream ss(linea);
+        string codigo, fecha, hora, cedula, tipoCombustible, cantidad, totalStr, metodoPago;
+        ss >> codigo;
+        ss.ignore(3);
+        ss>>fecha;
+        ss.ignore(3);
+        ss>>hora;
+        ss.ignore(3);
+        ss>>cedula;
+        ss.ignore(3);
+        ss>>tipoCombustible;
+        ss.ignore(3);
+        ss>>cantidad;
+        ss.ignore(3);
+        ss>>totalStr;
+        ss.ignore(3);
+        ss>>metodoPago;
+
+        if (tipoCombustible=="Regular"){
+            //litrosR+= double(cantidad);
+        }else if (tipoCombustible=="Premium"){
+            //litrosP+= double(cantidad);
+        }else {
+            //litrosE+= double(cantidad);
+        }
+    }
+    cout<<"Litros vendidos:\n";
+    cout<<"  Regular: "<<litrosR<<"\n";
+    cout<<"  Premium: "<<litrosP<<"\n";
+    cout<<"  EcoExtra: "<<litrosE<<"\n";
+}
+
+void estacion::verificarFugas(string nomArchivo){
+    fstream file (nomArchivo);
+
+    if (!file.is_open()){
+        cerr<<"Error abriendo archivo.";
+        return;
+    }
+
+    float litrosR,litrosP,litrosE;
+
+    string linea;
+    while (getline(file,linea)){
+        stringstream ss(linea);
+        string codigo, fecha, hora, cedula, tipoCombustible, cantidad, totalStr, metodoPago;
+        ss >> codigo;
+        ss.ignore(3);
+        ss>>fecha;
+        ss.ignore(3);
+        ss>>hora;
+        ss.ignore(3);
+        ss>>cedula;
+        ss.ignore(3);
+        ss>>tipoCombustible;
+        ss.ignore(3);
+        ss>>cantidad;
+        ss.ignore(3);
+        ss>>totalStr;
+        ss.ignore(3);
+        ss>>metodoPago;
+
+        if (tipoCombustible=="Regular"){
+            litrosR+= stod(cantidad);
+        }else if (tipoCombustible=="Premium"){
+            litrosP+= stod(cantidad);
+        }else {
+            litrosE+= stod(cantidad);
+        }
+    }
+
+    cout<<"Combustible regular: ";
+    float porcentajeR = ((litrosR+tanqueCentral.getCantR())/(tanqueCentral.getCapR()))*100;
+    if ((litrosR+tanqueCentral.getCantR())>=(tanqueCentral.getCapR()*0.95)){
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeR<<"%";
+    }else{
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeR<<"%";
+    }
+    cout<<"Combustible premium: ";
+    float porcentajeP = ((litrosP+tanqueCentral.getCantP())/(tanqueCentral.getCapP()))*100;
+    if ((litrosR+tanqueCentral.getCantP())>=(tanqueCentral.getCapP()*0.95)){
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeP<<"%";
+    }else{
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeP<<"%";
+    }
+    cout<<"Combustible EcoExtra: ";
+    float porcentajeE = ((litrosE+tanqueCentral.getCantE())/(tanqueCentral.getCapE()))*100;
+    if ((litrosR+tanqueCentral.getCantE())>=(tanqueCentral.getCapE()*0.95)){
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeE<<"%";
+    }else{
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeE<<"%";
+    }
+}
+
+void estacion::setCodigo(string cod){
+    codigo = cod;
 }
 
 string estacion::getCodigo(){

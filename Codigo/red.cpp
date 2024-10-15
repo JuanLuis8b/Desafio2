@@ -8,7 +8,59 @@ using namespace std;
 #include "red.h"
 #include "estacion.h"
 
+
+/*
+int precioRNorte;
+int precioRCentro;
+int precioRSur;
+
+int precioPNorte;
+int precioPCentro;
+int precioPSur;
+
+int precioENorte;
+int precioECentro;
+int precioESur;
+
+int capacidad = 1;
+estacion* estaciones;
+*/
+//string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE
+
+string genCodigo_(string codigo){
+    int codInt = stoi(codigo);
+    codInt+=100;
+    ostringstream oss;
+    oss << setw(codigo.size())<<setfill('0')<<codInt;
+    return oss.str();
+}
+
 red::red(){
+
+    precioRNorte = 0;
+    precioRCentro = 0;
+    precioRSur = 0;
+    precioPNorte = 0;
+    precioPCentro = 0;
+    precioPSur = 0;
+    precioENorte = 0;
+    precioECentro = 0;
+    precioESur = 0;
+    capacidad = 1;
+    estaciones = new estacion[capacidad];
+    estaciones[0].setCodigo("00100");
+}
+
+/*red::red(){
+
+}*/
+
+int red::getCapacidad(){
+    return capacidad;
+}
+
+estacion* red::getEstaciones(){
+    return estaciones;
 
 }
 
@@ -48,6 +100,76 @@ void red::setPrecioESur(int precio) {
     precioESur = precio;
 }
 
+/*
+string nombre;
+string codigo;
+string region;
+string coordenadas;
+string gerente;
+
+tanque tanqueCentral;
+
+int* precioR;
+int* precioP;
+int* precioE;
+
+int cantSurtidores = 2;
+
+surtidor* surtidores;// = new surtidor[cantSurtidores];
+*/
+string elegirRegion(){
+    cout<<"(1) Norte\n(2) Centro\n(3) Sur\n->";
+    string input;
+    cin>>input;
+    while (input != "1" && input != "2" && input != "3"){
+        cerr<<"Opcion invalida. Ingrese un numero: ";
+        cin>>input;
+    }
+    if (input == "1"){
+        return "Norte";
+    }else if (input == "2"){
+        return "Centro";
+    }else{
+        return "Sur";
+    }
+}
+
+void red::agregarEstacion(){
+
+    cout<<"\nIngrese el nombre de la estacion: ";
+    string nombre;
+    cin>>nombre;
+    string codigo = genCodigo_(estaciones[capacidad-1].getCodigo());
+    cout<<"\nIngrese la region:\n";
+    string region = elegirRegion();
+    cout<<"\nIngrese las coordenadas: ";
+    string coor;
+    cin>>coor;
+    cout<<"\nIngrese el nombre del gerente: ";
+    string gerente;
+    cin>>gerente;
+
+    estacion nuevaEstacion;
+    if (region == "Norte"){
+        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRNorte,&precioPNorte,&precioENorte);
+    }else if (region == "Centro"){
+        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRCentro,&precioPCentro,&precioECentro);
+    }else {
+        estacion nuevaEstacion(nombre,codigo,region,coor,gerente,&precioRSur,&precioPSur,&precioESur);
+    }
+
+    int nuevacap = capacidad + 1;
+    estacion* newEstaciones = new estacion[nuevacap];
+    for (int i = 0; i<capacidad;i++){
+        newEstaciones[i] = estaciones[i];
+    }
+    newEstaciones[nuevacap-1] = nuevaEstacion;
+    delete[] estaciones;
+    estaciones = newEstaciones;
+    capacidad = nuevacap;
+}
+
+/*
 void red::agregarEstacion (estacion& A){
     int nuevacap = capacidad + 1;
     estacion* newEstaciones = new estacion[nuevacap];
@@ -58,8 +180,9 @@ void red::agregarEstacion (estacion& A){
     delete[] estaciones;
     estaciones = newEstaciones;
     capacidad = nuevacap;
-
 }
+*/
+
 void red::eliminarEstacion(string codigo){
     int nuevacap = capacidad - 1;
     estacion* newEstaciones = new estacion [nuevacap];
@@ -79,10 +202,6 @@ void red::reporteVentas(string nomArchivo){
 
 
     int datos[capacidad][3];
-    /*
-    for (int i = 0; i<capacidad;i++){
-        datos[i][0] = estaciones[i].getCodigo();
-    }*/
 
     ifstream file (nomArchivo);
 
@@ -116,7 +235,7 @@ void red::reporteVentas(string nomArchivo){
         ss.ignore(3);
         ss>>metodoPago;
 
-        string codigoEstacion = codigo.substr(0,3)+"00";
+        string codigoEstacion = codigo.substr(0,2)+"00";
         int totalPagado = stoi(totalStr);
 
         for (int i = 0; i<capacidad;i++){
