@@ -37,12 +37,6 @@ estacion::estacion(){
 
     surtidores = new surtidor[cantSurtidores];
 
-    /*
-    string SCodigo = genCodigo(codigo);
-    for (int i = 0; i<cantSurtidores;i++){
-        surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
-        SCodigo = genCodigo(SCodigo);
-    }*/
 }
 
 
@@ -63,25 +57,7 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
     primerSurtidor = true;
 
     surtidores = new surtidor[cantSurtidores];
-    /*
-    string SCodigo = genCodigo(codigo);
-    for (int i = 0; i<cantSurtidores;i++){
-        surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
-        SCodigo = genCodigo(SCodigo);
-    }
-    */
 }
-/*
-surtidor estacion::crearSurtidor(){
-
-    string codigo = surtidores[cantSurtidores-1].getCodigo();
-    codigo = genCodigo(codigo);
-    cout<<"Ingrese el modelo: ";
-    string modelo;
-    cin >> modelo;
-    surtidor A(codigo,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
-    return A;
-}*/
 
 void estacion::agregarSurtidor(){
 
@@ -94,17 +70,6 @@ void estacion::agregarSurtidor(){
 
     int nuevacap;
 
-    /*
-    if (primeraEstacion){
-        primeraEstacion = false;
-        codigo = "00100";
-        nuevacap = capacidad;
-        ultimocodigo = codigo;
-    }else{
-        codigo = genCodigo_(ultimocodigo);
-        nuevacap = capacidad+1;
-    }
-    */
     if (primerSurtidor){
         primerSurtidor = false;
         codigoS = genCodigo(codigo);
@@ -134,16 +99,31 @@ void estacion::agregarSurtidor(){
     cantSurtidores = nuevacap;
 }
 
+void estacion::agregarSurtidor(surtidor& A){
+
+    if (cantSurtidores == 12){
+        cerr<<"Ya se ha alcanzado el maximo de surtidores\n";
+        return;
+    }
+
+    int nuevacap = cantSurtidores+1;
+
+    surtidor* newSurtidores = new surtidor [nuevacap];
+    for (int i = 0; i<cantSurtidores;i++){
+        newSurtidores[i] = surtidores[i];
+    }
+    newSurtidores[nuevacap-1] = A;
+
+    delete[] surtidores;
+    surtidores = newSurtidores;
+    cantSurtidores = nuevacap;
+}
+
 void estacion::eliminarSurtidor(string codigo){
     if (codigo == ""){
         return;
     }
-/*
-    if (cantSurtidores == 0){
-        //cerr<<"No hay surtidores para eliminar\n";
-        return;
-    }
-    */
+
     int nuevacap = cantSurtidores-1;
     surtidor* newSurtidores = new surtidor [nuevacap];
     int index = 0;
@@ -169,15 +149,7 @@ void estacion::activarDesactivarSurtidor(string codigo){
         }
     }
 }
-/*
-void estacion::desactivarSurtidor(string codigo){
-    for (int i = 0; i< cantSurtidores;i++){
-        if (surtidores[i].getCodigo() == codigo){
-            surtidores[i].setEstado(false);
-        }
-    }
-}
-*/
+
 void estacion::consultarHistorico(string nomArchivo){
 
     string datos[cantSurtidores];
@@ -210,7 +182,7 @@ void estacion::consultarHistorico(string nomArchivo){
 
 void estacion::reporteLitros(string nomArchivo){
 
-    fstream file (nomArchivo);
+    ifstream file (nomArchivo);
 
     if (!file.is_open()){
         cerr<<"Error abriendo archivo.";
@@ -361,29 +333,24 @@ bool estacion::getPrimerSurtidor(){
     return primerSurtidor;
 }
 
-
-/*
-string getRegion(){
-    return region;
+tanque* estacion::getTanque(){
+    return& tanqueCentral;
 }
 
-int getCapRegular(){
-    return regular[0];
+int** estacion::getPrecioR(){
+    return& precioR;
 }
-int getCapPremium(){
-    return premium[0];
+int** estacion::getPrecioP(){
+    return& precioP;
 }
-int getCapEco(){
-    return eco[0];
+int** estacion::getPrecioE(){
+    return& precioE;
 }
-int getPrecioRegular(){
-    return regular[1];
-}
-int getPrecioPremium(){
-    return premium[1];
-}
-int getPrecioEco(){
-    return eco[1];
-}
-*/
 
+void estacion::setPrimerSurtidor(bool valor){
+    primerSurtidor = valor;
+}
+
+void estacion::setUltimoCodigo(string codigo){
+    ultimoCodigo = codigo;
+}

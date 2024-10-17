@@ -55,8 +55,15 @@ class estacion {
 
         surtidor* getSurtidores();
 
+        tanque* getTanque();
+
+        int** getPrecioR();
+        int** getPrecioP();
+        int** getPrecioE();
+
         //surtidor crearSurtidor();
         void agregarSurtidor();
+        void agregarSurtidor(surtidor& A);
         void eliminarSurtidor(string codigo);
         void activarDesactivarSurtidor(string codigo);
         //void desactivarSurtidor(string codigo);
@@ -65,6 +72,9 @@ class estacion {
         void reporteLitros(string nomArchivo);
         void verificarFugas(string nomArchivo);
         void simularVenta(string nomArchivo);
+
+        void setPrimerSurtidor(bool valor);
+        void setUltimoCodigo(string codigo);
 
 };
 

@@ -24,6 +24,10 @@ public:
     int getCantP();
     int getCantE();
 
+    void setCapR (int nuevacap);
+    void setCapP (int nuevacap);
+    void setCapE (int nuevacap);
+
     void setCantR(int nuevaCantR);
     void setCantP(int nuevaCantP);
     void setCantE(int nuevaCantE);

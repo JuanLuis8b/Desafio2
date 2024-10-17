@@ -29,7 +29,7 @@ int main(){
             cout<<"Ingrese nombre del archivo de registros: ";
             cin >> registros;
             registros += ".txt";
-            //cargarArchivo();
+            cargarRed(miRed,database);
 
         }else if (input == 2){
             cout<<"Ingrese nombre para el archivo fuente: ";
@@ -38,7 +38,6 @@ int main(){
             cout<<"Ingrese nombre para el archivo de registros: ";
             cin >> registros;
             registros += ".txt";
-            red miRed;
         }
         else{
             salir = true;
@@ -92,6 +91,9 @@ int main(){
                 case 5 : {
 
                     int index = elegirEstacion(miRed);
+                    if (index == -1){
+                        break;
+                    }
                     estacion& miEstacion = miRed.getEstaciones()[index];
 
                     bool volver = false;

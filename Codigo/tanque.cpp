@@ -42,6 +42,18 @@ int tanque::getCantE()  {
     return cantE;
 }
 
+void tanque::setCapR (int nuevacap){
+    capR = nuevacap;
+}
+
+void tanque::setCapP (int nuevacap){
+    capP = nuevacap;
+}
+
+void tanque::setCapE (int nuevacap){
+    capE = nuevacap;
+}
+
 void tanque::setCantR(int nuevaCantR) {
     if (nuevaCantR <= capR) {
         cantR = nuevaCantR;

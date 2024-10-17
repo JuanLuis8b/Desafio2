@@ -1,3 +1,5 @@
+#include <fstream>
+#include <sstream>
 #include "red.h"
 #include "estacion.h"
 #include <string>
@@ -173,4 +175,178 @@ string elegirSurtidor_(estacion& nameEstacion){
     }
     int index = (stoi(input)-1);
     return nameEstacion.getSurtidores()[index].getCodigo();
+}
+
+/*
+ while (getline(file,linea)){
+        stringstream ss(linea);
+        string codigo, fecha, hora, cedula, tipoCombustible, cantidad, totalStr, metodoPago;
+        ss >> codigo;
+        ss.ignore(3);
+        ss>>fecha;
+        ss.ignore(3);
+        ss>>hora;
+        ss.ignore(3);
+        ss>>cedula;
+        ss.ignore(3);
+        ss>>tipoCombustible;
+        ss.ignore(3);
+        ss>>cantidad;
+        ss.ignore(3);
+        ss>>totalStr;
+        ss.ignore(3);
+        ss>>metodoPago;
+    }
+*/
+void descargarRed(red& miRed,string nomDatos){
+
+    ifstream file (nomDatos);
+
+    if (!file.is_open()){
+        cerr<<"Error abriendo archivo.";
+    }
+
+    string linea;
+    int indexE = -1;
+    while (getline(file,linea)){
+        if(linea.rfind("Red:",0)==0){
+            stringstream ss(linea);
+            string precioRNorte, precioRCentro, precioRSur, precioPNorte, precioPCentro, precioPSur, precioENorte, precioECentro, precioESur, capacidad, primeraEstacion, ultimocodigo;
+            ss.ignore(5);
+            ss>>precioRNorte;
+            ss.ignore(3);
+            ss>>precioRCentro;
+            ss.ignore(3);
+            ss>>precioRSur;
+            ss.ignore(3);
+            ss>>precioPNorte;
+            ss.ignore(3);
+            ss>>precioPCentro;
+            ss.ignore(3);
+            ss>>precioPSur;
+            ss.ignore(3);
+            ss>>precioENorte;
+            ss.ignore(3);
+            ss>>precioECentro;
+            ss.ignore(3);
+            ss>>precioESur;
+            ss.ignore(3);
+            ss>>capacidad;
+            ss.ignore(3);
+            ss>>primeraEstacion;
+            ss.ignore(3);
+            ss>>ultimocodigo;
+
+            miRed.setPrecioRNorte(stoi(precioRNorte));
+            miRed.setPrecioRCentro(stoi(precioRCentro));
+            miRed.setPrecioRSur(stoi(precioRSur));
+            miRed.setPrecioPNorte(stoi(precioPNorte));
+            miRed.setPrecioPCentro(stoi(precioPCentro));
+            miRed.setPrecioPSur(stoi(precioPSur));
+            miRed.setPrecioENorte(stoi(precioENorte));
+            miRed.setPrecioECentro(stoi(precioECentro));
+            miRed.setPrecioESur(stoi(precioESur));
+            //miRed.setCapacidad(stoi(capacidad));
+            miRed.setPrimeraEstacion((primeraEstacion) == "true" ? true : false);
+            miRed.setUltimoCodigo(ultimocodigo);
+        }
+        if (linea.rfind("Estacion:",0)==0){
+            stringstream ss(linea);
+            string nombre,codigo,region,coordenadas,gerente,cantSurtidores,primerSurtidor,ultimocodigo,capR,capP,capE,cantR,cantP,cantE;
+            ss.ignore(10);
+            ss>>nombre;
+            ss.ignore(3);
+            ss>>codigo;
+            ss.ignore(3);
+            ss>>region;
+            ss.ignore(3);
+            ss>>coordenadas;
+            ss.ignore(3);
+            ss>>gerente;
+            ss.ignore(3);
+            ss>>cantSurtidores;
+            ss.ignore(3);
+            ss>>primerSurtidor;
+            ss.ignore(3);
+            ss>>ultimocodigo;
+            ss.ignore(3);
+            ss>>capR;
+            ss.ignore(3);
+            ss>>capP;
+            ss.ignore(3);
+            ss>>capE;
+            ss.ignore(3);
+            ss>>cantR;
+            ss.ignore(3);
+            ss>>cantP;
+            ss.ignore(3);
+            ss>>cantE;
+
+            /*
+            int* precioR= nullptr;
+            int* precioP = nullptr;
+            int* precioE = nullptr;
+
+            if (region=="Norte"){
+                precioR = miRed.getPrecioRNorte();
+                precioP = miRed.getPrecioPNorte();
+                precioE = miRed.getPrecioESur();
+            }else if (region == "Sur"){
+                precioR = miRed.getPrecioRCentro();
+                precioP = miRed.getPrecioPCentro();
+                precioE = miRed.getPrecioECentro();
+            }else{
+                precioR = miRed.getPrecioRSur();
+                precioP = miRed.getPrecioPSur();
+                precioE = miRed.getPrecioESur();
+            }
+
+            estacion miEstacion(nombre,codigo,region,coordenadas,gerente,precioR,precioP,precioE);
+
+            */
+            estacion miEstacion;
+            if (region == "Norte"){
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRNorte(),miRed.getPrecioPNorte(),miRed.getPrecioENorte());
+            }else if (region == "Centro"){
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRCentro(),miRed.getPrecioPCentro(),miRed.getPrecioECentro());
+            }else {
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRSur(),miRed.getPrecioPSur(),miRed.getPrecioESur());
+            }
+
+            miEstacion.setUltimoCodigo(ultimocodigo);
+            miEstacion.setPrimerSurtidor((primerSurtidor=="true")?true:false);
+
+            miEstacion.getTanque()->setCapR(stoi(capR));
+            miEstacion.getTanque()->setCapP(stoi(capP));
+            miEstacion.getTanque()->setCapE(stoi(capE));
+            miEstacion.getTanque()->setCantR(stoi(cantR));
+            miEstacion.getTanque()->setCantP(stoi(cantP));
+            miEstacion.getTanque()->setCantE(stoi(cantE));
+
+            miRed.agregarEstacion(miEstacion);
+            indexE++;
+        }
+        if (linea.rfind("Surtidor:",0)==0){
+            stringstream ss(linea);
+            string codigo, modelo, estado;
+            ss.ignore(10);
+            ss>>codigo;
+            ss.ignore(3);
+            ss>>modelo;
+            ss.ignore(3);
+            ss>>estado;
+
+            cout<<"infosurti: "<<codigo<<endl<<modelo<<endl<<estado;
+
+            surtidor miSurtidor(codigo,modelo,miRed.getEstaciones()[indexE].getTanque(),miRed.getEstaciones()[indexE].getPrecioR(),miRed.getEstaciones()[indexE].getPrecioP(),miRed.getEstaciones()[indexE].getPrecioE());
+
+            miSurtidor.setEstado(((estado=="true")?true:false));
+            miRed.getEstaciones()[indexE].agregarSurtidor(miSurtidor);
+
+        }
+    }
+}
+
+void cargarRed(red& miRed, string nomFile){
+
 }

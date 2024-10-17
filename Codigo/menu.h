@@ -11,5 +11,6 @@ void fijarPrecios(red& redNacional);
 int elegirEstacion(red& nameRed);
 string elegirSurtidor(estacion& nameEstacion);
 string elegirSurtidor_(estacion& nameEstacion);
+void cargarRed(red& miRed,string nomDatos);
 
 #endif // MENU_H

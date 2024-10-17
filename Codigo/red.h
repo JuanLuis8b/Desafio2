@@ -47,12 +47,26 @@ class red {
         void setPrecioECentro(int precio);
         void setPrecioESur(int precio);
 
+        void setCapacidad(int valor);
+        void setUltimoCodigo(string codigo);
+        void setPrimeraEstacion(bool valor);
+
 
         void agregarEstacion ();
+        void agregarEstacion (estacion& miEstacion);
         void eliminarEstacion(string codigo);
 
         void reporteVentas(string nomArchivo);
 
+        int* getPrecioRNorte();
+        int* getPrecioRCentro();
+        int* getPrecioRSur();
+        int* getPrecioPNorte();
+        int* getPrecioPCentro();
+        int* getPrecioPSur();
+        int* getPrecioENorte();
+        int* getPrecioECentro();
+        int* getPrecioESur();
 };
 
 #endif // RED_H

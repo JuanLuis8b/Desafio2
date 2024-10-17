@@ -209,7 +209,7 @@ void red::agregarEstacion(){
     capacidad = nuevacap;
 }
 
-/*
+
 void red::agregarEstacion (estacion& A){
     int nuevacap = capacidad + 1;
     estacion* newEstaciones = new estacion[nuevacap];
@@ -221,7 +221,7 @@ void red::agregarEstacion (estacion& A){
     estaciones = newEstaciones;
     capacidad = nuevacap;
 }
-*/
+
 
 void red::eliminarEstacion(string codigo){
 
@@ -315,4 +315,61 @@ void red::reporteVentas(string nomArchivo){
 
 bool red::getPrimeraEstacion(){
     return primeraEstacion;
+}
+
+void red::setCapacidad(int valor){
+    capacidad=valor;
+}
+void red::setUltimoCodigo(string codigo){
+    ultimocodigo = codigo;
+}
+void red::setPrimeraEstacion(bool valor){
+    primeraEstacion = valor;
+}
+
+/*
+int precioRNorte;
+int precioRCentro;
+int precioRSur;
+
+int precioPNorte;
+int precioPCentro;
+int precioPSur;
+
+int precioENorte;
+int precioECentro;
+int precioESur;
+
+*/
+
+int* red::getPrecioRNorte(){
+    return& precioRNorte;
+}
+int* red::getPrecioRCentro(){
+    return& precioRCentro;
+}
+
+int* red::getPrecioRSur(){
+    return& precioRSur;
+}
+int* red::getPrecioPNorte(){
+    return& precioPNorte;
+}
+
+int* red::getPrecioPCentro(){
+    return& precioPCentro;
+}
+
+int* red::getPrecioPSur(){
+    return& precioPSur;
+}
+
+int* red::getPrecioENorte(){
+    return& precioENorte;
+}
+int* red::getPrecioECentro(){
+    return& precioECentro;
+}
+int* red::getPrecioESur(){
+    return& precioESur;
 }
