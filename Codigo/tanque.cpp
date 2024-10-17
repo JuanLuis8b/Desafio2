@@ -65,3 +65,16 @@ void tanque::setCantE(int nuevaCantE) {
         cout << "Error: La cantidad excede la capacidad de combustible EcoExtra.\n";
     }
 }
+
+void tanque::restarCantR(int CR){
+    cantR = cantR - CR;
+}
+
+void tanque::restarCantP(int CP){
+    cantP = cantP - CP;
+}
+
+void tanque::restarCantE(int CE){
+    cantE = cantE - CE;
+}
+

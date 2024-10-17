@@ -26,9 +26,12 @@ class estacion {
         int* precioP;
         int* precioE;
 
-        int cantSurtidores = 2;
+        int cantSurtidores;
 
         surtidor* surtidores;// = new surtidor[cantSurtidores];
+
+        bool primerSurtidor;
+        string ultimoCodigo;
 
     public:
 
@@ -42,6 +45,7 @@ class estacion {
         string getGerente();
         int getCantSurtidores();
 
+        bool getPrimerSurtidor();
 
         void setNombre();
         void setCodigo(string codigo);

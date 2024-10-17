@@ -23,6 +23,9 @@ class red {
         int capacidad;
         estacion* estaciones;
 
+        bool primeraEstacion;
+        string ultimocodigo;
+
     public:
 
         red();

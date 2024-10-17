@@ -82,24 +82,48 @@ void surtidor::vender(string nomArchivo){
     string cedula = randomCedula();
     string tipo = randomCombustible();
     string cantidad = randomCantidad();
-    string montoPago;
+
     int pago;
+    int cant = stoi(cantidad);
+
     if (tipo == "Regular"){
-        pago = **precioR * stoi(cantidad);
-        montoPago = to_string(pago);
-        cout<<cantidad;
-        cout<<montoPago;
+
+        if (tanqueCentral->getCantR()==0){
+            cerr<<"No hay combustible disponible.";
+            return;
+        }
+
+        if (tanqueCentral->getCantR()<cant){
+            cant = tanqueCentral->getCantR();
+        }
+        pago = **precioR * cant;
+        tanqueCentral->restarCantR(cant);
+
     }else if (tipo == "Premium"){
-        pago = **precioP * stoi(cantidad);
-        montoPago = to_string(pago);
-        cout<<cantidad;
-        cout<<montoPago;
+        if (tanqueCentral->getCantP()==0){
+            cerr<<"No hay combustible disponible.";
+            return;
+        }
+        if (tanqueCentral->getCantP()<cant){
+            cant = tanqueCentral->getCantR();
+        }
+        pago = **precioP * cant;
+        tanqueCentral->restarCantP(cant);
     }else {
-        pago = **precioE * stoi(cantidad);
-        montoPago = to_string(pago);
-        cout<<cantidad;
-        cout<<montoPago;
+
+        if (tanqueCentral->getCantE()==0){
+            cerr<<"No hay combustible disponible.";
+            return;
+        }
+        if (tanqueCentral->getCantE()<cant){
+            cant = tanqueCentral->getCantE();
+        }
+        pago = **precioP * cant;
+        tanqueCentral->restarCantE(cant);
     }
+
+    string montoPago = to_string(pago);
+    cantidad = to_string(cant);
 
     string metodoPago = randomMetodoPago();
 
@@ -155,20 +179,21 @@ void registrarVenta(string info, string nomArchivo){
 }*/
 
 surtidor::surtidor(){
+
     codigo = "";
     modelo = "";
-    estado = false;
+    estado = true;
     tanqueCentral = nullptr;
     precioR = nullptr;
     precioP = nullptr;
     precioE = nullptr;
 
-
 }
+
 surtidor::surtidor(string n_codigo, string n_modelo, tanque* n_tanqueCentral, int** n_precioR, int** n_precioP, int** n_precioE){
     codigo = n_codigo;
     modelo = n_modelo;
-    estado = false;
+    estado = true;
     tanqueCentral = n_tanqueCentral;
     precioR = n_precioR;
     precioP = n_precioP;

@@ -126,9 +126,15 @@ int elegirEstacion(red& nameRed){
 }
 
 string elegirSurtidor(estacion& nameEstacion){
+
+    if (nameEstacion.getCantSurtidores()==0 || nameEstacion.getPrimerSurtidor()){
+        cout<<"\nNo hay surtidores.";
+        return "";
+    }
+
     cout<<"\nDigite:\n";
     for (int i = 0; i < nameEstacion.getCantSurtidores();i++){
-        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo();
+        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo()<<endl;
     }
     cout<<"-> ";
     string input;
@@ -142,9 +148,15 @@ string elegirSurtidor(estacion& nameEstacion){
 }
 
 string elegirSurtidor_(estacion& nameEstacion){
+//imprime los estados
+    if (nameEstacion.getCantSurtidores()==0 || nameEstacion.getPrimerSurtidor()){
+        cout<<"\nNo hay surtidores.";
+        return "";
+    }
+
     cout<<"\nDigite:\n";
     for (int i = 0; i < nameEstacion.getCantSurtidores();i++){
-        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo()<<" Estado: "<<(nameEstacion.getSurtidores()[i].getEstado() ? "Activo" : "Desactivo") ;
+        cout<<"("<<(i+1)<<") "<<nameEstacion.getSurtidores()[i].getCodigo()<<" Estado: "<<(nameEstacion.getSurtidores()[i].getEstado() ? "Activo\n" : "Desactivo\n") ;
     }
     cout<<"-> ";
     string input;

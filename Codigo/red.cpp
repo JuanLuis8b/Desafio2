@@ -47,10 +47,13 @@ red::red(){
     precioECentro = 0;
     precioESur = 0;
     capacidad = 1;
-    estaciones = new estacion[capacidad];
-    //estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
-    new (&estaciones[0]) estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
 
+    estaciones = new estacion[capacidad];
+
+    primeraEstacion = true;
+
+    //estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
+    //new (&estaciones[0]) estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
     //estaciones[0] = estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
 }
 
@@ -142,8 +145,8 @@ void red::agregarEstacion(){
     cout<<"\nIngrese el nombre de la estacion: ";
     string nombre;
     cin>>nombre;
-    string codigo = genCodigo_(estaciones[capacidad-1].getCodigo());
-    cout<<codigo;
+    string codigo;
+
     cout<<"\nIngrese la region:\n";
     string region = elegirRegion();
     cout<<"\nIngrese las coordenadas: ";
@@ -153,7 +156,40 @@ void red::agregarEstacion(){
     string gerente;
     cin>>gerente;
 
+    int nuevacap;
+
+    if (primeraEstacion){
+        primeraEstacion = false;
+        codigo = "00100";
+        nuevacap = capacidad;
+        ultimocodigo = codigo;
+    }else{
+        codigo = genCodigo_(ultimocodigo);
+        nuevacap = capacidad+1;
+    }
+
+/*
+    int* precioR = nullptr;
+    int* precioP = nullptr;
+    int* precioE = nullptr;
+
+    if (region == "Norte"){
+        precioR = precioRNorte;
+        precioP = precioPNorte;
+        precioE = precioENorte;
+    }else if (region == "Centro"){
+        precioR = precioRCentro;
+        precioP = precioPCentro;
+        precioE = precioECentro;
+    }else{
+        precioR = precioRSur;
+        precioP = precioPSur;
+        precioE = precioESur;
+    }
+*/
     estacion nuevaEstacion;
+
+
     if (region == "Norte"){
         nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRNorte,&precioPNorte,&precioENorte);
     }else if (region == "Centro"){
@@ -162,7 +198,7 @@ void red::agregarEstacion(){
         nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRSur,&precioPSur,&precioESur);
     }
 
-    int nuevacap = capacidad + 1;
+
     estacion* newEstaciones = new estacion[nuevacap];
     for (int i = 0; i<capacidad;i++){
         newEstaciones[i] = estaciones[i];
@@ -188,6 +224,17 @@ void red::agregarEstacion (estacion& A){
 */
 
 void red::eliminarEstacion(string codigo){
+
+    for (int i = 0; i<capacidad;i++){
+        if (estaciones[i].getCodigo()==codigo){
+            for (int j = 0; j<estaciones[i].getCantSurtidores();j++){
+                if (estaciones[i].getSurtidores()->getEstado()){
+                    cerr<<"\nDesactive los surtidores para eliminar estacion.";
+                    return;
+                }
+            }
+        }
+    }
     int nuevacap = capacidad - 1;
     estacion* newEstaciones = new estacion [nuevacap];
     int index = 0;

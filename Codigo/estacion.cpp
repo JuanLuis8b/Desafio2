@@ -10,6 +10,7 @@ using namespace std;
 
 
 string genCodigo(string codigo){
+
     int codInt = stoi(codigo);
     codInt++;
     ostringstream oss;
@@ -19,26 +20,34 @@ string genCodigo(string codigo){
 
 
 estacion::estacion(){
+
     nombre = "";
-    codigo = "00100";
+    codigo = "";
     region = "";
     coordenadas = "";
     gerente = "";
+
+    cantSurtidores = 1;
 
     precioR = nullptr;
     precioP = nullptr;
     precioE = nullptr;
 
+    primerSurtidor = true;
+
     surtidores = new surtidor[cantSurtidores];
 
+    /*
     string SCodigo = genCodigo(codigo);
     for (int i = 0; i<cantSurtidores;i++){
         surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
         SCodigo = genCodigo(SCodigo);
-    }
-
+    }*/
 }
+
+
 estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE){
+
     nombre = n_nombre;
     codigo = n_codigo;
     region = n_region;
@@ -49,13 +58,18 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
     precioP = n_precioP;
     precioE = n_precioE;
 
-    surtidores = new surtidor[cantSurtidores];
+    cantSurtidores=1;
 
+    primerSurtidor = true;
+
+    surtidores = new surtidor[cantSurtidores];
+    /*
     string SCodigo = genCodigo(codigo);
     for (int i = 0; i<cantSurtidores;i++){
         surtidores[i] = surtidor(SCodigo,"Modelo-1",&tanqueCentral,&precioR,&precioP,&precioE);
         SCodigo = genCodigo(SCodigo);
     }
+    */
 }
 /*
 surtidor estacion::crearSurtidor(){
@@ -76,18 +90,42 @@ void estacion::agregarSurtidor(){
         return;
     }
 
-    string codigo = surtidores[cantSurtidores-1].getCodigo();
-    codigo = genCodigo(codigo);
+    string codigoS;
+
+    int nuevacap;
+
+    /*
+    if (primeraEstacion){
+        primeraEstacion = false;
+        codigo = "00100";
+        nuevacap = capacidad;
+        ultimocodigo = codigo;
+    }else{
+        codigo = genCodigo_(ultimocodigo);
+        nuevacap = capacidad+1;
+    }
+    */
+    if (primerSurtidor){
+        primerSurtidor = false;
+        codigoS = genCodigo(codigo);
+        nuevacap = cantSurtidores;
+        ultimoCodigo = codigoS;
+    }else{
+        codigoS = genCodigo(ultimoCodigo);
+        nuevacap = cantSurtidores+1;
+        ultimoCodigo = codigoS;
+    }
+
     cout<<"Ingrese el modelo: ";
     string modelo;
     cin >> modelo;
-    surtidor nuevoSurtidor(codigo,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
 
-    int nuevacap = cantSurtidores+1;
+    surtidor nuevoSurtidor(codigoS,modelo,&tanqueCentral,&precioR,&precioP,&precioE);
 
     surtidor* newSurtidores = new surtidor [nuevacap];
     for (int i = 0; i<cantSurtidores;i++){
         newSurtidores[i] = surtidores[i];
+        cerr<<"DebugCOPY;";
     }
     newSurtidores[nuevacap-1] = nuevoSurtidor;
 
@@ -97,10 +135,15 @@ void estacion::agregarSurtidor(){
 }
 
 void estacion::eliminarSurtidor(string codigo){
-    if (cantSurtidores = 0){
-        cerr<<"No hay surtidores para eliminar\n";
+    if (codigo == ""){
         return;
     }
+/*
+    if (cantSurtidores == 0){
+        //cerr<<"No hay surtidores para eliminar\n";
+        return;
+    }
+    */
     int nuevacap = cantSurtidores-1;
     surtidor* newSurtidores = new surtidor [nuevacap];
     int index = 0;
@@ -230,7 +273,9 @@ void estacion::verificarFugas(string nomArchivo){
         return;
     }
 
-    float litrosR,litrosP,litrosE;
+    float litrosR = 0;
+    float litrosP = 0;
+    float litrosE = 0;
 
     string linea;
     while (getline(file,linea)){
@@ -264,23 +309,23 @@ void estacion::verificarFugas(string nomArchivo){
     cout<<"Combustible regular: ";
     float porcentajeR = ((litrosR+tanqueCentral.getCantR())/(tanqueCentral.getCapR()))*100;
     if ((litrosR+tanqueCentral.getCantR())>=(tanqueCentral.getCapR()*0.95)){
-        cout<<"No hay fuga. Correspondencia al "<<porcentajeR<<"%";
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeR<<"%\n";
     }else{
-        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeR<<"%";
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeR<<"%\n";
     }
     cout<<"Combustible premium: ";
     float porcentajeP = ((litrosP+tanqueCentral.getCantP())/(tanqueCentral.getCapP()))*100;
     if ((litrosR+tanqueCentral.getCantP())>=(tanqueCentral.getCapP()*0.95)){
-        cout<<"No hay fuga. Correspondencia al "<<porcentajeP<<"%";
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeP<<"%\n";
     }else{
-        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeP<<"%";
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeP<<"%\n";
     }
     cout<<"Combustible EcoExtra: ";
     float porcentajeE = ((litrosE+tanqueCentral.getCantE())/(tanqueCentral.getCapE()))*100;
     if ((litrosR+tanqueCentral.getCantE())>=(tanqueCentral.getCapE()*0.95)){
-        cout<<"No hay fuga. Correspondencia al "<<porcentajeE<<"%";
+        cout<<"No hay fuga. Correspondencia al "<<porcentajeE<<"%\n";
     }else{
-        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeE<<"%";
+        cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeE<<"%\n";
     }
 }
 
@@ -310,6 +355,10 @@ surtidor* estacion::getSurtidores(){
 
 int estacion::getCantSurtidores(){
     return cantSurtidores;
+}
+
+bool estacion::getPrimerSurtidor(){
+    return primerSurtidor;
 }
 
 
