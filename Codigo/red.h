@@ -28,7 +28,7 @@ class red {
 
     public:
 
-        red();
+        red(int n_capacidad = 1);
 
         int getCapacidad();
         estacion* getEstaciones();

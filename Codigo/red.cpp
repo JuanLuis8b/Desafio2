@@ -35,7 +35,7 @@ string genCodigo_(string codigo){
     return oss.str();
 }
 
-red::red(){
+red::red(int n_capacidad){
 
     precioRNorte = 0;
     precioRCentro = 0;
@@ -46,7 +46,7 @@ red::red(){
     precioENorte = 0;
     precioECentro = 0;
     precioESur = 0;
-    capacidad = 1;
+    capacidad = n_capacidad;
 
     estaciones = new estacion[capacidad];
 

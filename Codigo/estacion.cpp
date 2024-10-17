@@ -40,7 +40,7 @@ estacion::estacion(){
 }
 
 
-estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE){
+estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE, int n_cantS){
 
     nombre = n_nombre;
     codigo = n_codigo;
@@ -52,7 +52,7 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
     precioP = n_precioP;
     precioE = n_precioE;
 
-    cantSurtidores=1;
+    cantSurtidores=n_cantS;
 
     primerSurtidor = true;
 

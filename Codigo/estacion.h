@@ -36,7 +36,7 @@ class estacion {
     public:
 
         estacion();
-        estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
+        estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE,int n_cantS=1);
 
         string getNombre();
         string getCodigo();

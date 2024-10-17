@@ -29,7 +29,7 @@ int main(){
             cout<<"Ingrese nombre del archivo de registros: ";
             cin >> registros;
             registros += ".txt";
-            cargarRed(miRed,database);
+            descargarRed(miRed, database);
 
         }else if (input == 2){
             cout<<"Ingrese nombre para el archivo fuente: ";

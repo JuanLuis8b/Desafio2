@@ -198,7 +198,7 @@ string elegirSurtidor_(estacion& nameEstacion){
         ss>>metodoPago;
     }
 */
-void descargarRed(red& miRed,string nomDatos){
+void descargarRed(red& miRed, string nomDatos){
 
     ifstream file (nomDatos);
 
@@ -208,6 +208,9 @@ void descargarRed(red& miRed,string nomDatos){
 
     string linea;
     int indexE = -1;
+    int indexS = -1;
+
+
     while (getline(file,linea)){
         if(linea.rfind("Red:",0)==0){
             stringstream ss(linea);
@@ -237,6 +240,8 @@ void descargarRed(red& miRed,string nomDatos){
             ss.ignore(3);
             ss>>ultimocodigo;
 
+            miRed = red(stoi(capacidad));
+
             miRed.setPrecioRNorte(stoi(precioRNorte));
             miRed.setPrecioRCentro(stoi(precioRCentro));
             miRed.setPrecioRSur(stoi(precioRSur));
@@ -251,6 +256,8 @@ void descargarRed(red& miRed,string nomDatos){
             miRed.setUltimoCodigo(ultimocodigo);
         }
         if (linea.rfind("Estacion:",0)==0){
+
+            indexE++;
             stringstream ss(linea);
             string nombre,codigo,region,coordenadas,gerente,cantSurtidores,primerSurtidor,ultimocodigo,capR,capP,capE,cantR,cantP,cantE;
             ss.ignore(10);
@@ -306,11 +313,11 @@ void descargarRed(red& miRed,string nomDatos){
             */
             estacion miEstacion;
             if (region == "Norte"){
-                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRNorte(),miRed.getPrecioPNorte(),miRed.getPrecioENorte());
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRNorte(),miRed.getPrecioPNorte(),miRed.getPrecioENorte(),stoi(cantSurtidores));
             }else if (region == "Centro"){
-                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRCentro(),miRed.getPrecioPCentro(),miRed.getPrecioECentro());
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRCentro(),miRed.getPrecioPCentro(),miRed.getPrecioECentro(),stoi(cantSurtidores));
             }else {
-                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRSur(),miRed.getPrecioPSur(),miRed.getPrecioESur());
+                miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRSur(),miRed.getPrecioPSur(),miRed.getPrecioESur(),stoi(cantSurtidores));
             }
 
             miEstacion.setUltimoCodigo(ultimocodigo);
@@ -323,10 +330,11 @@ void descargarRed(red& miRed,string nomDatos){
             miEstacion.getTanque()->setCantP(stoi(cantP));
             miEstacion.getTanque()->setCantE(stoi(cantE));
 
-            miRed.agregarEstacion(miEstacion);
-            indexE++;
+            //miRed.agregarEstacion(miEstacion);
+            miRed.getEstaciones()[indexE] = miEstacion;
         }
         if (linea.rfind("Surtidor:",0)==0){
+            indexS++;
             stringstream ss(linea);
             string codigo, modelo, estado;
             ss.ignore(10);
@@ -341,7 +349,9 @@ void descargarRed(red& miRed,string nomDatos){
             surtidor miSurtidor(codigo,modelo,miRed.getEstaciones()[indexE].getTanque(),miRed.getEstaciones()[indexE].getPrecioR(),miRed.getEstaciones()[indexE].getPrecioP(),miRed.getEstaciones()[indexE].getPrecioE());
 
             miSurtidor.setEstado(((estado=="true")?true:false));
-            miRed.getEstaciones()[indexE].agregarSurtidor(miSurtidor);
+
+            miRed.getEstaciones()[indexE].getSurtidores()[indexS] = miSurtidor;
+            //miRed.getEstaciones()[indexE].agregarSurtidor(miSurtidor);
 
         }
     }
