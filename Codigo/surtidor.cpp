@@ -182,7 +182,7 @@ surtidor::surtidor(){
 
     codigo = "";
     modelo = "";
-    estado = true;
+    estado = false;
     tanqueCentral = nullptr;
     precioR = nullptr;
     precioP = nullptr;

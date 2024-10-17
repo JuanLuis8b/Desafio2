@@ -111,6 +111,12 @@ void fijarPrecios(red& redNacional){
 }
 
 int elegirEstacion(red& nameRed){
+
+    if (nameRed.getCapacidad()==0 || nameRed.getPrimeraEstacion()){
+        cerr<<"\nNo hay estaciones.";
+        return -1;
+    }
+
     cout<<"\nDigite:\n";
     for (int i = 0; i < nameRed.getCapacidad();i++){
         cout<<"("<<(i+1)<<") "<<nameRed.getEstaciones()[i].getNombre()<<endl;

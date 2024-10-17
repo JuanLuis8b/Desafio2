@@ -308,21 +308,21 @@ void estacion::verificarFugas(string nomArchivo){
 
     cout<<"Combustible regular: ";
     float porcentajeR = ((litrosR+tanqueCentral.getCantR())/(tanqueCentral.getCapR()))*100;
-    if ((litrosR+tanqueCentral.getCantR())>=(tanqueCentral.getCapR()*0.95)){
+    if (porcentajeR>=95){
         cout<<"No hay fuga. Correspondencia al "<<porcentajeR<<"%\n";
     }else{
         cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeR<<"%\n";
     }
     cout<<"Combustible premium: ";
     float porcentajeP = ((litrosP+tanqueCentral.getCantP())/(tanqueCentral.getCapP()))*100;
-    if ((litrosR+tanqueCentral.getCantP())>=(tanqueCentral.getCapP()*0.95)){
+    if (porcentajeP>=95){
         cout<<"No hay fuga. Correspondencia al "<<porcentajeP<<"%\n";
     }else{
         cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeP<<"%\n";
     }
     cout<<"Combustible EcoExtra: ";
     float porcentajeE = ((litrosE+tanqueCentral.getCantE())/(tanqueCentral.getCapE()))*100;
-    if ((litrosR+tanqueCentral.getCantE())>=(tanqueCentral.getCapE()*0.95)){
+    if (porcentajeE >= 95){
         cout<<"No hay fuga. Correspondencia al "<<porcentajeE<<"%\n";
     }else{
         cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeE<<"%\n";

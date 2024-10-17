@@ -65,8 +65,12 @@ int main(){
                 case 2 : {
 
                     int index = elegirEstacion(miRed);
+                    if (index == -1){
+                        break;
+                    }
                     string codigo = miRed.getEstaciones()[index].getCodigo();
                     miRed.eliminarEstacion(codigo);
+                    cout<<"\nEstacion eliminada.\n";
                     break;
 
                 }

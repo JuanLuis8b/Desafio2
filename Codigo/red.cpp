@@ -225,6 +225,7 @@ void red::agregarEstacion (estacion& A){
 
 void red::eliminarEstacion(string codigo){
 
+
     for (int i = 0; i<capacidad;i++){
         if (estaciones[i].getCodigo()==codigo){
             for (int j = 0; j<estaciones[i].getCantSurtidores();j++){
@@ -310,4 +311,8 @@ void red::reporteVentas(string nomArchivo){
     }
 
     return;
+}
+
+bool red::getPrimeraEstacion(){
+    return primeraEstacion;
 }

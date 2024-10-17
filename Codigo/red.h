@@ -33,6 +33,8 @@ class red {
         int getCapacidad();
         estacion* getEstaciones();
 
+        bool getPrimeraEstacion();
+
         void setPrecioRNorte(int precio);
         void setPrecioRCentro(int precio);
         void setPrecioRSur(int precio);
