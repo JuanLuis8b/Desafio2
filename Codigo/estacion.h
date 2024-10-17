@@ -20,18 +20,17 @@ class estacion {
         string coordenadas;
         string gerente;
 
+        int cantSurtidores;
+        bool primerSurtidor;
+        string ultimoCodigo;
+
         tanque tanqueCentral;
 
         int* precioR;
         int* precioP;
         int* precioE;
 
-        int cantSurtidores;
-
-        surtidor* surtidores;// = new surtidor[cantSurtidores];
-
-        bool primerSurtidor;
-        string ultimoCodigo;
+        surtidor* surtidores;
 
     public:
 
@@ -44,51 +43,31 @@ class estacion {
         string getCoordenadas();
         string getGerente();
         int getCantSurtidores();
-
         bool getPrimerSurtidor();
+        int** getPrecioR();
+        int** getPrecioP();
+        int** getPrecioE();
+        string getUltimoCodigo();
+
+        surtidor* getSurtidores();
+        tanque* getTanque();
 
         void setNombre();
         void setCodigo(string codigo);
         void setRegion();
         void setCoordenadas();
         void setGerente();
+        void setPrimerSurtidor(bool valor);
+        void setUltimoCodigo(string codigo);
 
-        surtidor* getSurtidores();
-
-        tanque* getTanque();
-
-        int** getPrecioR();
-        int** getPrecioP();
-        int** getPrecioE();
-
-        //surtidor crearSurtidor();
         void agregarSurtidor();
-        void agregarSurtidor(surtidor& A);
         void eliminarSurtidor(string codigo);
         void activarDesactivarSurtidor(string codigo);
-        //void desactivarSurtidor(string codigo);
-
         void consultarHistorico(string nomArchivo);
         void reporteLitros(string nomArchivo);
         void verificarFugas(string nomArchivo);
         void simularVenta(string nomArchivo);
 
-        void setPrimerSurtidor(bool valor);
-        void setUltimoCodigo(string codigo);
-        string getUltimoCodigo();
-
 };
 
 #endif // ESTACION_H
-
-/*
-estacion(string cod, string reg, string ger, string coo);
-
-        string getRegion();
-        int getCapRegular();
-        int getCapPremium();
-        int getCapEco();
-        int getPrecioRegular();
-        int getPrecioPremium();
-        int getPrecioEco();
-*/

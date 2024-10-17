@@ -177,27 +177,6 @@ string elegirSurtidor_(estacion& nameEstacion){
     return nameEstacion.getSurtidores()[index].getCodigo();
 }
 
-/*
- while (getline(file,linea)){
-        stringstream ss(linea);
-        string codigo, fecha, hora, cedula, tipoCombustible, cantidad, totalStr, metodoPago;
-        ss >> codigo;
-        ss.ignore(3);
-        ss>>fecha;
-        ss.ignore(3);
-        ss>>hora;
-        ss.ignore(3);
-        ss>>cedula;
-        ss.ignore(3);
-        ss>>tipoCombustible;
-        ss.ignore(3);
-        ss>>cantidad;
-        ss.ignore(3);
-        ss>>totalStr;
-        ss.ignore(3);
-        ss>>metodoPago;
-    }
-*/
 void descargarRed(red& miRed, string nomDatos){
 
     ifstream file (nomDatos);
@@ -250,7 +229,6 @@ void descargarRed(red& miRed, string nomDatos){
             miRed.setPrecioENorte(stoi(precioENorte));
             miRed.setPrecioECentro(stoi(precioECentro));
             miRed.setPrecioESur(stoi(precioESur));
-            //miRed.setCapacidad(stoi(capacidad));
             miRed.setPrimeraEstacion((primeraEstacion) == "true" ? true : false);
             miRed.setUltimoCodigo(ultimocodigo);
         }
@@ -288,28 +266,6 @@ void descargarRed(red& miRed, string nomDatos){
             ss.ignore(3);
             ss>>cantE;
 
-            /*
-            int* precioR= nullptr;
-            int* precioP = nullptr;
-            int* precioE = nullptr;
-
-            if (region=="Norte"){
-                precioR = miRed.getPrecioRNorte();
-                precioP = miRed.getPrecioPNorte();
-                precioE = miRed.getPrecioESur();
-            }else if (region == "Sur"){
-                precioR = miRed.getPrecioRCentro();
-                precioP = miRed.getPrecioPCentro();
-                precioE = miRed.getPrecioECentro();
-            }else{
-                precioR = miRed.getPrecioRSur();
-                precioP = miRed.getPrecioPSur();
-                precioE = miRed.getPrecioESur();
-            }
-
-            estacion miEstacion(nombre,codigo,region,coordenadas,gerente,precioR,precioP,precioE);
-
-            */
             estacion miEstacion;
             if (region == "Norte"){
                 miEstacion = estacion(nombre,codigo,region,coordenadas,gerente,miRed.getPrecioRNorte(),miRed.getPrecioPNorte(),miRed.getPrecioENorte(),stoi(cantSurtidores));
@@ -329,7 +285,6 @@ void descargarRed(red& miRed, string nomDatos){
             miEstacion.getTanque()->setCantP(stoi(cantP));
             miEstacion.getTanque()->setCantE(stoi(cantE));
 
-            //miRed.agregarEstacion(miEstacion);
             miRed.getEstaciones()[indexE] = miEstacion;
         }
         if (linea.rfind("Surtidor:",0)==0){
@@ -350,8 +305,6 @@ void descargarRed(red& miRed, string nomDatos){
             miSurtidor.setEstado(((estado=="true")?true:false));
 
             miRed.getEstaciones()[indexE].getSurtidores()[indexS] = miSurtidor;
-            //miRed.getEstaciones()[indexE].agregarSurtidor(miSurtidor);
-
         }
     }
 }
@@ -379,7 +332,6 @@ void cargarRed(red& miRed, string nomFile){
          << (miRed.getPrimeraEstacion()? "true":"false")<<" | "
          << miRed.getUltimoCodigo()<<endl;
 
-    //for (const estacion& miEstacion : miRed.getEstaciones())
     for (int i = 0; i<miRed.getCapacidad();i++){
         file << "Estacion: "
              << miRed.getEstaciones()[i].getNombre()<<" | "
@@ -397,14 +349,11 @@ void cargarRed(red& miRed, string nomFile){
              << miRed.getEstaciones()[i].getTanque()->getCantP() << " | "
              << miRed.getEstaciones()[i].getTanque()->getCantE() << endl;
 
-        //for (const surtidor& miSurtidor : miEstacion.getSurtidores())
         for (int j = 0; j< miRed.getEstaciones()[i].getCantSurtidores();j++){
             file<<"Surtidor: "
                 << miRed.getEstaciones()[i].getSurtidores()[j].getCodigo()<<" | "
                 <<miRed.getEstaciones()[i].getSurtidores()[j].getModelo()<<" | "
                 <<(miRed.getEstaciones()[i].getSurtidores()[j].getEstado()?"true":"false")<<endl;
-
         }
     }
-
 }

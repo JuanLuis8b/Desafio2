@@ -8,16 +8,75 @@ using namespace std;
 #include "tanque.h"
 #include "surtidor.h"
 
+//GETTERS
 
-string genCodigo(string codigo){
-
-    int codInt = stoi(codigo);
-    codInt++;
-    ostringstream oss;
-    oss << setw(codigo.size())<<setfill('0')<<codInt;
-    return oss.str();
+string estacion::getCodigo(){
+    return codigo;
 }
 
+string estacion::getNombre(){
+    return nombre;
+}
+
+string estacion::getRegion(){
+    return region;
+}
+
+string estacion::getCoordenadas(){
+    return coordenadas;
+}
+
+surtidor* estacion::getSurtidores(){
+    return surtidores;
+}
+
+int estacion::getCantSurtidores(){
+    return cantSurtidores;
+}
+
+bool estacion::getPrimerSurtidor(){
+    return primerSurtidor;
+}
+
+tanque* estacion::getTanque(){
+    return& tanqueCentral;
+}
+
+int** estacion::getPrecioR(){
+    return& precioR;
+}
+
+int** estacion::getPrecioP(){
+    return& precioP;
+}
+
+int** estacion::getPrecioE(){
+    return& precioE;
+}
+
+string estacion::getUltimoCodigo(){
+    return ultimoCodigo;
+}
+
+string estacion::getGerente(){
+    return gerente;
+}
+
+//SETTERS
+
+void estacion::setCodigo(string cod){
+    codigo = cod;
+}
+
+void estacion::setPrimerSurtidor(bool valor){
+    primerSurtidor = valor;
+}
+
+void estacion::setUltimoCodigo(string codigo){
+    ultimoCodigo = codigo;
+}
+
+//CONSTRUCTORES
 
 estacion::estacion(){
 
@@ -36,9 +95,7 @@ estacion::estacion(){
     primerSurtidor = true;
 
     surtidores = new surtidor[cantSurtidores];
-
 }
-
 
 estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE, int n_cantS){
 
@@ -57,6 +114,16 @@ estacion::estacion(string n_nombre, string n_codigo, string n_region, string n_c
     primerSurtidor = true;
 
     surtidores = new surtidor[cantSurtidores];
+}
+
+//OTROS METODOS
+
+string genCodigo(string codigo){
+    int codInt = stoi(codigo);
+    codInt++;
+    ostringstream oss;
+    oss << setw(codigo.size())<<setfill('0')<<codInt;
+    return oss.str();
 }
 
 void estacion::agregarSurtidor(){
@@ -98,26 +165,6 @@ void estacion::agregarSurtidor(){
     cantSurtidores = nuevacap;
 }
 
-void estacion::agregarSurtidor(surtidor& A){
-
-    if (cantSurtidores == 12){
-        cerr<<"Ya se ha alcanzado el maximo de surtidores\n";
-        return;
-    }
-
-    int nuevacap = cantSurtidores+1;
-
-    surtidor* newSurtidores = new surtidor [nuevacap];
-    for (int i = 0; i<cantSurtidores;i++){
-        newSurtidores[i] = surtidores[i];
-    }
-    newSurtidores[nuevacap-1] = A;
-
-    delete[] surtidores;
-    surtidores = newSurtidores;
-    cantSurtidores = nuevacap;
-}
-
 void estacion::eliminarSurtidor(string codigo){
     if (codigo == ""){
         return;
@@ -152,17 +199,14 @@ void estacion::activarDesactivarSurtidor(string codigo){
 void estacion::consultarHistorico(string nomArchivo){
 
     string datos[cantSurtidores];
-
     ifstream file (nomArchivo);
 
     if (!file.is_open()){
         cerr<<"Error abriendo archivo.";
         return;
     }
-
     string linea;
     while (getline(file,linea)){
-
         string codigo = linea.substr(0,5);
         string info = linea.substr(8)+"\n";
 
@@ -172,7 +216,6 @@ void estacion::consultarHistorico(string nomArchivo){
             }
         }
     }
-
     for (int i = 0; i<cantSurtidores;i++){
         cout<<"Surtidor #"<<surtidores[i].getCodigo()<<endl;
         cout<<datos[i]<<endl;
@@ -223,7 +266,6 @@ void estacion::reporteLitros(string nomArchivo){
     cout<<"  Premium: "<<litrosP<<"\n";
     cout<<"  EcoExtra: "<<litrosE<<"\n";
 }
-
 
 int randomIndex(int cap){
     random_device x;
@@ -298,66 +340,4 @@ void estacion::verificarFugas(string nomArchivo){
     }else{
         cout<<"¡Alerta de fuga! Correspondencia al"<<porcentajeE<<"%\n";
     }
-}
-
-void estacion::setCodigo(string cod){
-    codigo = cod;
-}
-
-string estacion::getCodigo(){
-    return codigo;
-}
-
-string estacion::getNombre(){
-    return nombre;
-}
-
-string estacion::getRegion(){
-    return region;
-}
-
-string estacion::getCoordenadas(){
-    return coordenadas;
-}
-
-surtidor* estacion::getSurtidores(){
-    return surtidores;
-}
-
-int estacion::getCantSurtidores(){
-    return cantSurtidores;
-}
-
-bool estacion::getPrimerSurtidor(){
-    return primerSurtidor;
-}
-
-tanque* estacion::getTanque(){
-    return& tanqueCentral;
-}
-
-int** estacion::getPrecioR(){
-    return& precioR;
-}
-int** estacion::getPrecioP(){
-    return& precioP;
-}
-int** estacion::getPrecioE(){
-    return& precioE;
-}
-
-void estacion::setPrimerSurtidor(bool valor){
-    primerSurtidor = valor;
-}
-
-void estacion::setUltimoCodigo(string codigo){
-    ultimoCodigo = codigo;
-}
-
-string estacion::getUltimoCodigo(){
-    return ultimoCodigo;
-}
-
-string estacion::getGerente(){
-    return gerente;
 }

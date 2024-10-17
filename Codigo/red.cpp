@@ -8,58 +8,7 @@ using namespace std;
 #include "red.h"
 #include "estacion.h"
 
-
-/*
-int precioRNorte;
-int precioRCentro;
-int precioRSur;
-
-int precioPNorte;
-int precioPCentro;
-int precioPSur;
-
-int precioENorte;
-int precioECentro;
-int precioESur;
-
-int capacidad = 1;
-estacion* estaciones;
-*/
-//string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int* n_precioR, int* n_precioP, int* n_precioE
-
-string genCodigo_(string codigo){
-    int codInt = stoi(codigo);
-    codInt+=100;
-    ostringstream oss;
-    oss << setw(codigo.size())<<setfill('0')<<codInt;
-    return oss.str();
-}
-
-red::red(int n_capacidad){
-
-    precioRNorte = 0;
-    precioRCentro = 0;
-    precioRSur = 0;
-    precioPNorte = 0;
-    precioPCentro = 0;
-    precioPSur = 0;
-    precioENorte = 0;
-    precioECentro = 0;
-    precioESur = 0;
-    capacidad = n_capacidad;
-
-    estaciones = new estacion[capacidad];
-
-    primeraEstacion = true;
-
-    //estacion(string n_nombre, string n_codigo, string n_region, string n_coordenadas, string n_gerente, int *n_precioR, int *n_precioP, int *n_precioE);
-    //new (&estaciones[0]) estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
-    //estaciones[0] = estacion("Colombia","00100","Centro","(12.456, -08.345)","Juan Luis",&precioRCentro,&precioPCentro,&precioPSur);
-}
-
-/*red::red(){
-
-}*/
+//GETTERS
 
 int red::getCapacidad(){
     return capacidad;
@@ -67,7 +16,59 @@ int red::getCapacidad(){
 
 estacion* red::getEstaciones(){
     return estaciones;
+}
 
+bool red::getPrimeraEstacion(){
+    return primeraEstacion;
+}
+
+int* red::getPrecioRNorte(){
+    return& precioRNorte;
+}
+int* red::getPrecioRCentro(){
+    return& precioRCentro;
+}
+
+int* red::getPrecioRSur(){
+    return& precioRSur;
+}
+int* red::getPrecioPNorte(){
+    return& precioPNorte;
+}
+
+int* red::getPrecioPCentro(){
+    return& precioPCentro;
+}
+
+int* red::getPrecioPSur(){
+    return& precioPSur;
+}
+
+int* red::getPrecioENorte(){
+    return& precioENorte;
+}
+int* red::getPrecioECentro(){
+    return& precioECentro;
+}
+int* red::getPrecioESur(){
+    return& precioESur;
+}
+string red::getUltimoCodigo(){
+    return ultimocodigo;
+}
+
+//SETTERS
+
+void red::setCapacidad(int valor){
+    capacidad=valor;
+}
+
+void red::setUltimoCodigo(string codigo){
+    ultimocodigo = codigo;
+}
+
+void red::setPrimeraEstacion(bool valor){
+    primeraEstacion = valor;
 }
 
 void red::setPrecioRNorte(int precio) {
@@ -106,23 +107,36 @@ void red::setPrecioESur(int precio) {
     precioESur = precio;
 }
 
-/*
-string nombre;
-string codigo;
-string region;
-string coordenadas;
-string gerente;
+//CONSTRUCTORES
 
-tanque tanqueCentral;
+red::red(int n_capacidad){
 
-int* precioR;
-int* precioP;
-int* precioE;
+    precioRNorte = 0;
+    precioRCentro = 0;
+    precioRSur = 0;
+    precioPNorte = 0;
+    precioPCentro = 0;
+    precioPSur = 0;
+    precioENorte = 0;
+    precioECentro = 0;
+    precioESur = 0;
+    capacidad = n_capacidad;
 
-int cantSurtidores = 2;
+    estaciones = new estacion[capacidad];
 
-surtidor* surtidores;// = new surtidor[cantSurtidores];
-*/
+    primeraEstacion = true;
+}
+
+//OTROS METODOS
+
+string genCodigo_(string codigo){
+    int codInt = stoi(codigo);
+    codInt+=100;
+    ostringstream oss;
+    oss << setw(codigo.size())<<setfill('0')<<codInt;
+    return oss.str();
+}
+
 string elegirRegion(){
     cout<<"(1) Norte\n(2) Centro\n(3) Sur\n->";
     string input;
@@ -146,7 +160,6 @@ void red::agregarEstacion(){
     string nombre;
     cin>>nombre;
     string codigo;
-
     cout<<"\nIngrese la region:\n";
     string region = elegirRegion();
     cout<<"\nIngrese las coordenadas: ";
@@ -157,7 +170,6 @@ void red::agregarEstacion(){
     cin>>gerente;
 
     int nuevacap;
-
     if (primeraEstacion){
         primeraEstacion = false;
         codigo = "00100";
@@ -168,28 +180,7 @@ void red::agregarEstacion(){
         nuevacap = capacidad+1;
     }
 
-/*
-    int* precioR = nullptr;
-    int* precioP = nullptr;
-    int* precioE = nullptr;
-
-    if (region == "Norte"){
-        precioR = precioRNorte;
-        precioP = precioPNorte;
-        precioE = precioENorte;
-    }else if (region == "Centro"){
-        precioR = precioRCentro;
-        precioP = precioPCentro;
-        precioE = precioECentro;
-    }else{
-        precioR = precioRSur;
-        precioP = precioPSur;
-        precioE = precioESur;
-    }
-*/
     estacion nuevaEstacion;
-
-
     if (region == "Norte"){
         nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRNorte,&precioPNorte,&precioENorte);
     }else if (region == "Centro"){
@@ -197,7 +188,6 @@ void red::agregarEstacion(){
     }else {
         nuevaEstacion = estacion(nombre,codigo,region,coor,gerente,&precioRSur,&precioPSur,&precioESur);
     }
-
 
     estacion* newEstaciones = new estacion[nuevacap];
     for (int i = 0; i<capacidad;i++){
@@ -210,23 +200,7 @@ void red::agregarEstacion(){
     ultimocodigo = nuevaEstacion.getCodigo();
 }
 
-
-void red::agregarEstacion (estacion& A){
-    int nuevacap = capacidad + 1;
-    estacion* newEstaciones = new estacion[nuevacap];
-    for (int i = 0; i<capacidad;i++){
-        newEstaciones[i] = estaciones[i];
-    }
-    newEstaciones[nuevacap-1] = A;
-    delete[] estaciones;
-    estaciones = newEstaciones;
-    capacidad = nuevacap;
-    ultimocodigo = A.getCodigo();
-}
-
-
 void red::eliminarEstacion(string codigo){
-
 
     for (int i = 0; i<capacidad;i++){
         if (estaciones[i].getCodigo()==codigo){
@@ -253,7 +227,6 @@ void red::eliminarEstacion(string codigo){
 }
 
 void red::reporteVentas(string nomArchivo){
-
 
     int datos[capacidad][3] = {0,0,0};
 
@@ -311,70 +284,4 @@ void red::reporteVentas(string nomArchivo){
         cout<<"     Premium: "<<datos[i][Premium]<<endl;
         cout<<"     EcoExtra: "<<datos[i][Eco]<<endl;
     }
-
-    return;
-}
-
-bool red::getPrimeraEstacion(){
-    return primeraEstacion;
-}
-
-void red::setCapacidad(int valor){
-    capacidad=valor;
-}
-void red::setUltimoCodigo(string codigo){
-    ultimocodigo = codigo;
-}
-void red::setPrimeraEstacion(bool valor){
-    primeraEstacion = valor;
-}
-
-/*
-int precioRNorte;
-int precioRCentro;
-int precioRSur;
-
-int precioPNorte;
-int precioPCentro;
-int precioPSur;
-
-int precioENorte;
-int precioECentro;
-int precioESur;
-
-*/
-
-int* red::getPrecioRNorte(){
-    return& precioRNorte;
-}
-int* red::getPrecioRCentro(){
-    return& precioRCentro;
-}
-
-int* red::getPrecioRSur(){
-    return& precioRSur;
-}
-int* red::getPrecioPNorte(){
-    return& precioPNorte;
-}
-
-int* red::getPrecioPCentro(){
-    return& precioPCentro;
-}
-
-int* red::getPrecioPSur(){
-    return& precioPSur;
-}
-
-int* red::getPrecioENorte(){
-    return& precioENorte;
-}
-int* red::getPrecioECentro(){
-    return& precioECentro;
-}
-int* red::getPrecioESur(){
-    return& precioESur;
-}
-string red::getUltimoCodigo(){
-    return ultimocodigo;
 }

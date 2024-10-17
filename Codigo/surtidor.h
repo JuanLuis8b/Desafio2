@@ -12,9 +12,6 @@ using namespace std;
 #ifndef surtidor_h
 #define surtidor_h
 
-//string getFecha();
-//void registrarVenta(string info, string archivo);
-
 class surtidor {
 
     private:
@@ -34,6 +31,7 @@ class surtidor {
         surtidor();
         surtidor(string n_codigo, string n_modelo, tanque* n_tanqueCentral, int** n_precioR, int** n_precioP, int** n_precioE);
 
+        string getModelo();
         string getCodigo();
         bool getEstado();
         int getPrecioR();
@@ -44,8 +42,5 @@ class surtidor {
         void setEstado(bool nuevoEstado);
 
         void vender(string nomArchivo);
-        string getModelo();
 };
-
-void registrarVenta(string info, string nomArchivo);
 #endif // SURTIDOR_H
