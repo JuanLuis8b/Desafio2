@@ -67,6 +67,8 @@ class red {
         int* getPrecioENorte();
         int* getPrecioECentro();
         int* getPrecioESur();
+
+        string getUltimoCodigo();
 };
 
 #endif // RED_H

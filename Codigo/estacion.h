@@ -75,6 +75,7 @@ class estacion {
 
         void setPrimerSurtidor(bool valor);
         void setUltimoCodigo(string codigo);
+        string getUltimoCodigo();
 
 };
 

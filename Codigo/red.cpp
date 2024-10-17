@@ -207,6 +207,7 @@ void red::agregarEstacion(){
     delete[] estaciones;
     estaciones = newEstaciones;
     capacidad = nuevacap;
+    ultimocodigo = nuevaEstacion.getCodigo();
 }
 
 
@@ -220,6 +221,7 @@ void red::agregarEstacion (estacion& A){
     delete[] estaciones;
     estaciones = newEstaciones;
     capacidad = nuevacap;
+    ultimocodigo = A.getCodigo();
 }
 
 
@@ -372,4 +374,7 @@ int* red::getPrecioECentro(){
 }
 int* red::getPrecioESur(){
     return& precioESur;
+}
+string red::getUltimoCodigo(){
+    return ultimocodigo;
 }

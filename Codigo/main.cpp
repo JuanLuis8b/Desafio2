@@ -11,16 +11,18 @@ int main(){
 
     bool salir = false;
 
+    red miRed;
+
+    string database;
+    string registros;
+
     while (!salir){
 
         cout<<"Bienvenido.\n\nDigite:\n(1) Cargar red existente\n(2) Crear nueva red\n(#) Salir\n-> ";
         int input;
         cin >> input;
 
-        red miRed;
 
-        string database;
-        string registros;
 
         if (input == 1){
             cout<<"Ingrese nombre del archivo fuente: ";
@@ -190,6 +192,8 @@ int main(){
             }
         }
     }
+
+    cargarRed(miRed,database);
 
     return 0;
 

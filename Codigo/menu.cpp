@@ -208,8 +208,7 @@ void descargarRed(red& miRed, string nomDatos){
 
     string linea;
     int indexE = -1;
-    int indexS = -1;
-
+    int indexS;
 
     while (getline(file,linea)){
         if(linea.rfind("Red:",0)==0){
@@ -256,7 +255,7 @@ void descargarRed(red& miRed, string nomDatos){
             miRed.setUltimoCodigo(ultimocodigo);
         }
         if (linea.rfind("Estacion:",0)==0){
-
+            indexS = -1;
             indexE++;
             stringstream ss(linea);
             string nombre,codigo,region,coordenadas,gerente,cantSurtidores,primerSurtidor,ultimocodigo,capR,capP,capE,cantR,cantP,cantE;
@@ -344,7 +343,7 @@ void descargarRed(red& miRed, string nomDatos){
             ss.ignore(3);
             ss>>estado;
 
-            cout<<"infosurti: "<<codigo<<endl<<modelo<<endl<<estado;
+            cout<<"infosurti: "<<codigo<<endl<<modelo<<endl<<estado<<endl;
 
             surtidor miSurtidor(codigo,modelo,miRed.getEstaciones()[indexE].getTanque(),miRed.getEstaciones()[indexE].getPrecioR(),miRed.getEstaciones()[indexE].getPrecioP(),miRed.getEstaciones()[indexE].getPrecioE());
 
@@ -358,5 +357,54 @@ void descargarRed(red& miRed, string nomDatos){
 }
 
 void cargarRed(red& miRed, string nomFile){
+
+    ofstream file (nomFile);
+
+    if (!file.is_open()){
+        cerr << "Error abriendo archivo."<<endl;
+        return;
+    }
+
+    file << "Red: "
+         << *miRed.getPrecioRNorte() << " | "
+         << *miRed.getPrecioRCentro()<< " | "
+         << *miRed.getPrecioRSur() << " | "
+         << *miRed.getPrecioPNorte() << " | "
+         << *miRed.getPrecioPCentro() << " | "
+         << *miRed.getPrecioPSur() << " | "
+         << *miRed.getPrecioENorte() << " | "
+         << *miRed.getPrecioECentro() << " | "
+         << *miRed.getPrecioESur() << " | "
+         << miRed.getCapacidad() << " | "
+         << (miRed.getPrimeraEstacion()? "true":"false")<<" | "
+         << miRed.getUltimoCodigo()<<endl;
+
+    //for (const estacion& miEstacion : miRed.getEstaciones())
+    for (int i = 0; i<miRed.getCapacidad();i++){
+        file << "Estacion: "
+             << miRed.getEstaciones()[i].getNombre()<<" | "
+             << miRed.getEstaciones()[i].getCodigo()<<" | "
+             << miRed.getEstaciones()[i].getRegion()<<" | "
+             << miRed.getEstaciones()[i].getCoordenadas()<<" | "
+             << miRed.getEstaciones()[i].getGerente()<<" | "
+             << miRed.getEstaciones()[i].getCantSurtidores()<<" | "
+             <<(miRed.getEstaciones()[i].getPrimerSurtidor()?"true":"false")<<" | "
+             << miRed.getEstaciones()[i].getUltimoCodigo()<<" | "
+             << miRed.getEstaciones()[i].getTanque()->getCapR() << " | "
+             << miRed.getEstaciones()[i].getTanque()->getCapP() << " | "
+             << miRed.getEstaciones()[i].getTanque()->getCapE() << " | "
+             << miRed.getEstaciones()[i].getTanque()->getCantR() << " | "
+             << miRed.getEstaciones()[i].getTanque()->getCantP() << " | "
+             << miRed.getEstaciones()[i].getTanque()->getCantE() << endl;
+
+        //for (const surtidor& miSurtidor : miEstacion.getSurtidores())
+        for (int j = 0; j< miRed.getEstaciones()[i].getCantSurtidores();j++){
+            file<<"Surtidor: "
+                << miRed.getEstaciones()[i].getSurtidores()[j].getCodigo()<<" | "
+                <<miRed.getEstaciones()[i].getSurtidores()[j].getModelo()<<" | "
+                <<(miRed.getEstaciones()[i].getSurtidores()[j].getEstado()?"true":"false")<<endl;
+
+        }
+    }
 
 }

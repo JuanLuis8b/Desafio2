@@ -223,4 +223,8 @@ void surtidor::setEstado(bool nuevoEstado){
     estado = nuevoEstado;
 }
 
+string surtidor::getModelo(){
+    return modelo;
+}
+
 

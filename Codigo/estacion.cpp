@@ -90,7 +90,6 @@ void estacion::agregarSurtidor(){
     surtidor* newSurtidores = new surtidor [nuevacap];
     for (int i = 0; i<cantSurtidores;i++){
         newSurtidores[i] = surtidores[i];
-        cerr<<"DebugCOPY;";
     }
     newSurtidores[nuevacap-1] = nuevoSurtidor;
 
@@ -353,4 +352,12 @@ void estacion::setPrimerSurtidor(bool valor){
 
 void estacion::setUltimoCodigo(string codigo){
     ultimoCodigo = codigo;
+}
+
+string estacion::getUltimoCodigo(){
+    return ultimoCodigo;
+}
+
+string estacion::getGerente(){
+    return gerente;
 }
