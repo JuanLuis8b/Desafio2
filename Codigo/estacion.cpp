@@ -252,13 +252,15 @@ void estacion::reporteLitros(string nomArchivo){
         ss>>totalStr;
         ss.ignore(3);
         ss>>metodoPago;
-
-        if (tipoCombustible=="Regular"){
-            litrosR+= stod(cantidad);
-        }else if (tipoCombustible=="Premium"){
-            litrosP+= stod(cantidad);
-        }else {
-            litrosE+= stod(cantidad);
+        string codigoEstacion = codigo.substr(0,3)+"00";
+        if (codigoEstacion == this->codigo){
+            if (tipoCombustible=="Regular"){
+                litrosR+= stod(cantidad);
+            }else if (tipoCombustible=="Premium"){
+                litrosP+= stod(cantidad);
+            }else {
+                litrosE+= stod(cantidad);
+            }
         }
     }
     cout<<"Litros vendidos:\n";
@@ -309,13 +311,15 @@ void estacion::verificarFugas(string nomArchivo){
         ss>>totalStr;
         ss.ignore(3);
         ss>>metodoPago;
-
-        if (tipoCombustible=="Regular"){
-            litrosR+= stod(cantidad);
-        }else if (tipoCombustible=="Premium"){
-            litrosP+= stod(cantidad);
-        }else {
-            litrosE+= stod(cantidad);
+        string codigoEstacion = codigo.substr(0,3)+"00";
+        if (codigoEstacion == this->codigo){
+            if (tipoCombustible=="Regular"){
+                litrosR+= stod(cantidad);
+            }else if (tipoCombustible=="Premium"){
+                litrosP+= stod(cantidad);
+            }else {
+                litrosE+= stod(cantidad);
+            }
         }
     }
 

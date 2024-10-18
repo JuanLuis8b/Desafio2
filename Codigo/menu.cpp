@@ -298,8 +298,6 @@ void descargarRed(red& miRed, string nomDatos){
             ss.ignore(3);
             ss>>estado;
 
-            cout<<"infosurti: "<<codigo<<endl<<modelo<<endl<<estado<<endl;
-
             surtidor miSurtidor(codigo,modelo,miRed.getEstaciones()[indexE].getTanque(),miRed.getEstaciones()[indexE].getPrecioR(),miRed.getEstaciones()[indexE].getPrecioP(),miRed.getEstaciones()[indexE].getPrecioE());
 
             miSurtidor.setEstado(((estado=="true")?true:false));
